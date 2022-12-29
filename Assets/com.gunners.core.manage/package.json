@@ -1,0 +1,14 @@
+{
+	"name": "com.gunners.core.manage",
+	"displayName": "WeAreProStars Core Package",
+	"version": "1.0.0",
+	"unity": "2021.3.7f1",
+	"author": "Do Hoang Than",
+	"description": "Core Managers for Gunners",
+	"dependencies": {
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/thandh-3171/Gunners.Brawl.Core.Manage"
+	}
+}
