@@ -58,23 +58,3 @@ sysinfo.txt
 
 # Crashlytics generated file
 crashlytics-build.properties
-
-# Gunner.Core.Manager customs
-# Only keep core scripts. Ignore all the others that don't need.
-#
-/[Pp]rojectSettings/
-/[Pp]ackages/
-/[Uu]serSettings/
-#
-/[Aa]ssets/Readme.asset
-/[Aa]ssets/Readme.asset.meta
-/[Aa]ssets/[Ss]cenes/
-/[Aa]ssets/[Ss]cenes.meta
-/[Aa]ssets/[Ss]ettings/
-/[Aa]ssets/[Ss]ettings.meta
-/[Aa]ssets/[Tt]utorialInfo/
-/[Aa]ssets/[Tt]utorialInfo.meta
-/[Aa]ssets/[Tt]utorialInfo/
-/[Aa]ssets/[Tt]utorialInfo.meta
-/[Aa]ssets/[Uu]niversalRenderPipelineGlobalSettings.asset
-/[Aa]ssets/[Uu]niversalRenderPipelineGlobalSettings.asset.meta
