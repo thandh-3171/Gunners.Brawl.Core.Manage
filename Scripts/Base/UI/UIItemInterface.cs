@@ -6,6 +6,6 @@ namespace PJLived.GunnerStars.FirstGame.UI.Template
 {
     public interface UIItemInterface
     {
-        void Setup<T>(T data);
+        void OnPostAdded_SetupUI<T>(T data);
     }
 }

@@ -99,7 +99,7 @@ namespace PJLived.GunnerStars.FirstGame.UI.Template
             }
             GameObject newItem = Instantiate(itemPrefab, content.transform);
             UIItemInterface iItem = newItem.GetComponent<UIItemInterface>();
-            if (iItem != null) iItem.Setup(data);
+            if (iItem != null) iItem.OnPostAdded_SetupUI(data);
         }
         #endregion
     }
