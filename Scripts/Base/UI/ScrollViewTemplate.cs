@@ -93,7 +93,7 @@ namespace PJLived.GunnerStars.FirstGame.UI.Template
             }
             GameObject newItem = Instantiate(itemPrefab, content.transform);
             UIItemInterface iItem = newItem.GetComponent<UIItemInterface>();
-            if (iItem != null) iItem.OnPostAdded_SetupUI(data);
+            if (iItem != null) iItem.OnPostAdded_SetupUI(data, newItem);
         }
         /// <summary>
         /// Delete and re-create is way faster than delete one by one.
