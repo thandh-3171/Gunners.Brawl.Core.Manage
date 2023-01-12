@@ -24,11 +24,12 @@ namespace PJLived.GunnerStars.FirstGame.UI.Template
         #endregion
 
         #region Private vars
-        ScrollRect scrollViewScript;
-        GameObject scrollView;
-        GameObject viewPort;
-        GameObject content;
-        GameObject contentPrefab;
+        private ScrollRect scrollViewScript;
+        private GameObject scrollView;
+        private GameObject viewPort;
+        private GameObject content;
+        private GameObject contentPrefab;
+        private bool initialized = false;
         #endregion
 
         #region Mono
@@ -42,11 +43,15 @@ namespace PJLived.GunnerStars.FirstGame.UI.Template
         [ContextMenu("Initialized")]
         private void Initialized()
         {
+            StartCoroutine(_Initialized());
+        }
+        IEnumerator _Initialized()
+        {
             scrollViewScript = GetComponent<ScrollRect>();
             if (scrollViewScript == null)
             {
                 Debug.LogWarning("Init error.");
-                return;
+                yield break;
             }
             scrollView = scrollViewScript.gameObject;
             viewPort = scrollViewScript.viewport.gameObject;
@@ -57,12 +62,14 @@ namespace PJLived.GunnerStars.FirstGame.UI.Template
             for (int child = 0; child < deleteChild.Count; child++)
                 if (Application.isPlaying) Destroy(deleteChild[child].gameObject);
                 else DestroyImmediate(deleteChild[child].gameObject);
+            yield return new WaitUntil(() => content.transform.childCount == 0);
             if (contentPrefab == null)
             {
                 contentPrefab = Instantiate(content, scrollView.transform);
                 contentPrefab.SetActive(false);
                 contentPrefab.name = "ContentPrefab";
             }
+            initialized = true;
         }
         #endregion
 
@@ -94,12 +101,11 @@ namespace PJLived.GunnerStars.FirstGame.UI.Template
         [ContextMenu("ResetScroll")]
         public void ResetScroll()
         {
-            if (content == null)
-            {
-                Debug.Log("Can't reset. Content null.");
-                return;
-            }
-            if (viewPort == null) return;
+            StartCoroutine(_ResetScroll());
+        }
+        IEnumerator _ResetScroll()
+        {
+            if (!this.initialized) yield return new WaitUntil(() => this.initialized);
             if (Application.isPlaying) Destroy(content.gameObject);
             else DestroyImmediate(content.gameObject);
             content = Instantiate(contentPrefab, viewPort.transform);
@@ -108,7 +114,6 @@ namespace PJLived.GunnerStars.FirstGame.UI.Template
             content.name = "Content";
             scrollViewScript.content = content.GetComponent<RectTransform>();
         }
-
         #endregion
     }
 }
