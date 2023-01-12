@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -50,6 +51,12 @@ namespace PJLived.GunnerStars.FirstGame.UI.Template
             scrollView = scrollViewScript.gameObject;
             viewPort = scrollViewScript.viewport.gameObject;
             content = scrollViewScript.content.gameObject;
+            List<GameObject> deleteChild = new List<GameObject>();
+            for (int child = 0; child < content.transform.childCount; child++)
+                deleteChild.Add(content.transform.GetChild(child).gameObject);
+            for (int child = 0; child < deleteChild.Count; child++)
+                if (Application.isPlaying) Destroy(deleteChild[child].gameObject);
+                else DestroyImmediate(deleteChild[child].gameObject);
             if (contentPrefab == null)
             {
                 contentPrefab = Instantiate(content, scrollView.transform);
@@ -60,26 +67,6 @@ namespace PJLived.GunnerStars.FirstGame.UI.Template
         #endregion
 
         #region public methods
-        /// <summary>
-        /// Delete and re-create is way faster than delete one by one.
-        /// </summary>
-        [ContextMenu("ResetScroll")]
-        public void ResetScroll()
-        {
-            if (content == null)
-            {
-                Debug.Log("Can't reset. Content null.");
-                return;
-            }
-            if (viewPort == null) return;
-            if (Application.isPlaying) Destroy(content.gameObject);
-            else DestroyImmediate(content.gameObject);
-            content = Instantiate(contentPrefab, viewPort.transform);
-            content.SetActive(true);
-            content.transform.SetAsFirstSibling();
-            content.name = "Content";
-            scrollViewScript.content = content.GetComponent<RectTransform>();
-        }
         /// <summary>
         /// Add a new Item.
         /// Item should have interface.
@@ -101,6 +88,27 @@ namespace PJLived.GunnerStars.FirstGame.UI.Template
             UIItemInterface iItem = newItem.GetComponent<UIItemInterface>();
             if (iItem != null) iItem.OnPostAdded_SetupUI(data);
         }
+        /// <summary>
+        /// Delete and re-create is way faster than delete one by one.
+        /// </summary>
+        [ContextMenu("ResetScroll")]
+        public void ResetScroll()
+        {
+            if (content == null)
+            {
+                Debug.Log("Can't reset. Content null.");
+                return;
+            }
+            if (viewPort == null) return;
+            if (Application.isPlaying) Destroy(content.gameObject);
+            else DestroyImmediate(content.gameObject);
+            content = Instantiate(contentPrefab, viewPort.transform);
+            content.SetActive(true);
+            content.transform.SetAsFirstSibling();
+            content.name = "Content";
+            scrollViewScript.content = content.GetComponent<RectTransform>();
+        }
+
         #endregion
     }
 }
