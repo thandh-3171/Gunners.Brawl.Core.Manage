@@ -111,6 +111,7 @@ namespace PJLived.GunnerStars.FirstGame.UI.Template
         public virtual void SelectItem(UIItemInterface item)
         {
             this._selectingItem = item;
+            if (onClearSelection != null) onClearSelection.Invoke(this._selectingItem);
             if (onClickItem != null) onClickItem.Invoke(this._selectingItem);
         }
         /// <summary>
