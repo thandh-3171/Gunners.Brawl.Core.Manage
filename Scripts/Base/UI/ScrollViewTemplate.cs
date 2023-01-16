@@ -19,6 +19,13 @@ namespace PJLived.GunnerStars.FirstGame.UI.Template
     // </summary>
     public class ScrollViewTemplate : MonoBehaviour
     {
+        #region events
+        public delegate void OnClickItem(UIItemInterface item);
+        public OnClickItem onClickItem;
+        public delegate void OnClearSelection(UIItemInterface lastItem);
+        public OnClearSelection onClearSelection;
+        #endregion
+
         #region Serialized
         [SerializeField] GameObject itemPrefab;
         #endregion
@@ -30,6 +37,8 @@ namespace PJLived.GunnerStars.FirstGame.UI.Template
         private GameObject content;
         private GameObject contentPrefab;
         private bool initialized = false;
+
+        private UIItemInterface _selectingItem;
         #endregion
 
         #region Mono
@@ -94,6 +103,23 @@ namespace PJLived.GunnerStars.FirstGame.UI.Template
             GameObject newItem = Instantiate(itemPrefab, content.transform);
             UIItemInterface iItem = newItem.GetComponent<UIItemInterface>();
             if (iItem != null) iItem.OnPostAdded_SetupUI(data, newItem);
+        }
+        /// <summary>
+        /// Handle when select an item.
+        /// </summary>
+        /// <param name="item"></param>
+        public virtual void SelectItem(UIItemInterface item)
+        {
+            this._selectingItem = item;
+            if (onClickItem != null) onClickItem.Invoke(this._selectingItem);
+        }
+        /// <summary>
+        /// Clear the selection.
+        /// Reset the state of the last picked item.
+        /// </summary>
+        public virtual void ClearSeletion()
+        {
+            if (onClearSelection != null) onClearSelection.Invoke(this._selectingItem);
         }
         /// <summary>
         /// Delete and re-create is way faster than delete one by one.
