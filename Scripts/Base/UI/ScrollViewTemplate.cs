@@ -81,6 +81,16 @@ namespace WeAreProStars.Core.Manage.UI.Template
             }
             initialized = true;
         }
+
+        /// <summary>
+        /// Scroll view and scroll view template, I don't need this.
+        /// But drop down needs.
+        /// </summary>
+        /// <param name="keep"></param>
+        public void KeepOrDeleteItemPrefab(bool keep = false)
+        {
+
+        }
         #endregion
 
         #region public methods
