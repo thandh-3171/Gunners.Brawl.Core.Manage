@@ -5,6 +5,14 @@ namespace WeAreProStars.Core.Manage.UI.Template
     public class BaseItemButton : MonoBehaviour
         , UIItemInterface
     {
+        #region events
+        public delegate void OnSetSelected();
+        public OnSetSelected onSetSelected;
+
+        public delegate void OnSetUnSelected();
+        public OnSetUnSelected onSetUnSelected;
+        #endregion
+
         #region vars
         /// <summary>
         /// State of being selected.
@@ -38,7 +46,14 @@ namespace WeAreProStars.Core.Manage.UI.Template
         /// Value be check first, set after.
         /// </summary>
         /// <param name="value"></param>
-        public virtual void HandleSetSelected(bool value) { }
+        public virtual void HandleSetSelected(bool value)
+        {
+            //If same value, do nothing.
+            if (_selected == value) return;
+            if (!_selected && value && onSetSelected != null) onSetSelected.Invoke();
+            else if (_selected && !value && onSetUnSelected != null) onSetUnSelected.Invoke();
+            _selected = value;
+        }
 
         /// <summary>
         /// Set up data and spread infomation into containers.
