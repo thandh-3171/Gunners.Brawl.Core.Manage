@@ -56,12 +56,17 @@ namespace WeAreProStars.Core.Manage.UI.Template
         }
 
         /// <summary>
+        /// Call to click.
+        /// </summary>
+        public virtual void OnClick() { }
+
+        /// <summary>
         /// Set up data and spread infomation into containers.
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="data"></param>
         /// <param name="entity"></param>
-        public virtual void OnPostAdded_SetupUI<T>(T data, GameObject entity) { }
+        public virtual void OnPostAdded_SetupUI<T>(T data, GameObject entity) { }        
         #endregion
     }
 }

@@ -7,11 +7,16 @@ namespace WeAreProStars.Core.Manage.UI.Template
     public interface UIItemInterface
     {
         /// <summary>
+        /// Call to force onclick.
+        /// </summary>
+        void OnClick();
+
+        /// <summary>
         /// Get the transform of this item.
         /// </summary>
         /// <returns></returns>
         /// Transform transform();
-        
+
         /// <summary>
         /// T data is the class contain infomation.
         /// GameObject entity is the button or the UI item.

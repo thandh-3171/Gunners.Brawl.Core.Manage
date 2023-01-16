@@ -38,6 +38,7 @@ namespace WeAreProStars.Core.Manage.UI.Template
         private GameObject contentPrefab;
         private bool initialized = false;
 
+        private List<UIItemInterface> _items = new List<UIItemInterface>();
         private UIItemInterface _selectingItem;
         #endregion
 
@@ -87,8 +88,9 @@ namespace WeAreProStars.Core.Manage.UI.Template
         /// Add a new Item.
         /// Item should have interface.
         /// If index = -1, add new at the end.
+        /// If autoActive == true, set Index value at 01.
         /// </summary>
-        public virtual void AddItem<T>(T data, int index = -1)
+        public virtual void AddItem<T>(T data, int index = -1, bool autoActive = true)
         {
             if (itemPrefab == null)
             {
@@ -103,6 +105,8 @@ namespace WeAreProStars.Core.Manage.UI.Template
             GameObject newItem = Instantiate(itemPrefab, content.transform);
             UIItemInterface iItem = newItem.GetComponent<UIItemInterface>();
             if (iItem != null) iItem.OnPostAdded_SetupUI(data, newItem);
+            _items.Add(iItem);
+            if (autoActive && _items.Count == 1) iItem.OnClick();
         }
         /// <summary>
         /// Handle when select an item.
@@ -140,6 +144,9 @@ namespace WeAreProStars.Core.Manage.UI.Template
             content.transform.SetAsFirstSibling();
             content.name = "Content";
             scrollViewScript.content = content.GetComponent<RectTransform>();
+            onClickItem = null;
+            onClearSelection = null;
+            _items = new List<UIItemInterface>();
         }
         #endregion
     }
