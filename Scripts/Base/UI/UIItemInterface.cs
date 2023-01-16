@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace PJLived.GunnerStars.FirstGame.UI.Template
+namespace WeAreProStars.Core.Manage.UI.Template
 {
     public interface UIItemInterface
     {
@@ -10,7 +10,8 @@ namespace PJLived.GunnerStars.FirstGame.UI.Template
         /// Get the transform of this item.
         /// </summary>
         /// <returns></returns>
-        Transform transform();
+        /// Transform transform();
+        
         /// <summary>
         /// T data is the class contain infomation.
         /// GameObject entity is the button or the UI item.

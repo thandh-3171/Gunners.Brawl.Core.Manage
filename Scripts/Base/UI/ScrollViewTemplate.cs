@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
 
-namespace PJLived.GunnerStars.FirstGame.UI.Template
+namespace WeAreProStars.Core.Manage.UI.Template
 {
     // <summary>
     // Hierychy : 
