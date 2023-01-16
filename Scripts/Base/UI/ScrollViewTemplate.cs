@@ -108,6 +108,7 @@ namespace WeAreProStars.Core.Manage.UI.Template
             _items.Add(iItem);
             if (autoActive && _items.Count == 1) iItem.OnClick();
         }
+
         /// <summary>
         /// Handle when select an item.
         /// </summary>
@@ -118,6 +119,7 @@ namespace WeAreProStars.Core.Manage.UI.Template
             if (onClearSelection != null) onClearSelection.Invoke(this._selectingItem);
             if (onClickItem != null) onClickItem.Invoke(this._selectingItem);
         }
+
         /// <summary>
         /// Clear the selection.
         /// Reset the state of the last picked item.
@@ -126,6 +128,7 @@ namespace WeAreProStars.Core.Manage.UI.Template
         {
             if (onClearSelection != null) onClearSelection.Invoke(this._selectingItem);
         }
+
         /// <summary>
         /// Delete and re-create is way faster than delete one by one.
         /// </summary>
@@ -147,6 +150,48 @@ namespace WeAreProStars.Core.Manage.UI.Template
             onClickItem = null;
             onClearSelection = null;
             _items = new List<UIItemInterface>();
+        }
+
+        /// <summary>
+        /// Force item at index to click.
+        /// </summary>
+        /// <param name="index"></param>
+        public void ClickItemAt(int index)
+        {
+            if (0 < index && index < this._items.Count)
+                this._items[index].OnClick();
+        }
+
+        /// <summary>
+        /// Click the next item.
+        /// </summary>
+        public void ClickNextItem()
+        {
+            if (this._items.Count <= 0) return;
+            if (_selectingItem == null) ClickItemAt(0);
+            else
+            {
+                var nextIndex = this._items.IndexOf(_selectingItem);
+                if (nextIndex >= this._items.Count - 1) nextIndex = 0;
+                else nextIndex++;
+                this._items[nextIndex].OnClick();
+            }
+        }
+
+        /// <summary>
+        /// Click the next item.
+        /// </summary>
+        public void ClickPreviousItem()
+        {
+            if (this._items.Count <= 0) return;
+            if (_selectingItem == null) ClickItemAt(this._items.Count - 1);
+            else
+            {
+                var previousIndex = this._items.IndexOf(_selectingItem);
+                if (previousIndex <= 0) previousIndex = this._items.Count - 1;
+                else previousIndex--;
+                this._items[previousIndex].OnClick();
+            }
         }
         #endregion
     }
