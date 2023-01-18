@@ -17,15 +17,8 @@ namespace WeAreProStars.Core.Manage.UI.Template
     //      -> Vertical Bar         // Don't care. May delete
     ///     -> ContentPrefab        // Must UN-enable
     // </summary>
-    public class ScrollViewTemplate : MonoBehaviour
+    public class DropdownScrollView : ScrollViewTemplate
     {
-        #region events
-        public delegate void OnClickItem(UIItemInterface item);
-        public OnClickItem onClickItem;
-        public delegate void OnClearSelection(UIItemInterface lastItem);
-        public OnClearSelection onClearSelection;
-        #endregion
-
         #region Serialized
         [SerializeField] GameObject itemPrefab;
         #endregion
@@ -55,7 +48,7 @@ namespace WeAreProStars.Core.Manage.UI.Template
         {
             StartCoroutine(_Initialized());
         }
-        protected virtual IEnumerator _Initialized()
+        protected override IEnumerator _Initialized()
         {
             scrollViewScript = GetComponent<ScrollRect>();
             if (scrollViewScript == null)
@@ -81,16 +74,6 @@ namespace WeAreProStars.Core.Manage.UI.Template
             }
             initialized = true;
         }
-
-        /// <summary>
-        /// Scroll view and scroll view template, I don't need this.
-        /// But drop down needs.
-        /// </summary>
-        /// <param name="keep"></param>
-        public virtual void KeepOrDeleteItemPrefab(bool keep = false)
-        {
-
-        }
         #endregion
 
         #region public methods
@@ -100,42 +83,25 @@ namespace WeAreProStars.Core.Manage.UI.Template
         /// If index = -1, add new at the end.
         /// If autoActive == true, set Index value at 01.
         /// </summary>
-        public virtual GameObject AddItem<T>(T data, int index = -1, bool autoActive = true)
+        public override GameObject AddItem<T>(T data, int index = -1, bool autoActive = true)
         {
-            if (itemPrefab == null)
-            {
-                Debug.Log("Item prefab null.");
-                return null;
-            }
-            if (content == null)
-            {
-                Debug.Log("Content null.");
-                return null;
-            }
-            GameObject newItem = Instantiate(itemPrefab, content.transform);
-            UIItemInterface iItem = newItem.GetComponent<UIItemInterface>();
-            if (iItem != null) iItem.OnPostAdded_SetupUI(data, newItem);
-            _items.Add(iItem);
-            if (autoActive && _items.Count == 1) iItem.OnClick();
-            return newItem;
+            return base.AddItem<T>(data);
         }
 
         /// <summary>
         /// Handle when select an item.
         /// </summary>
         /// <param name="item"></param>
-        public virtual void SelectItem(UIItemInterface item)
+        public override void SelectItem(UIItemInterface item)
         {
-            this._selectingItem = item;
-            if (onClearSelection != null) onClearSelection.Invoke(this._selectingItem);
-            if (onClickItem != null) onClickItem.Invoke(this._selectingItem);
+            base.SelectItem(item);
         }
 
         /// <summary>
         /// Clear the selection.
         /// Reset the state of the last picked item.
         /// </summary>
-        public virtual void ClearSeletion()
+        public override void ClearSeletion()
         {
             if (onClearSelection != null) 
                 onClearSelection.Invoke(this._selectingItem);
@@ -145,7 +111,7 @@ namespace WeAreProStars.Core.Manage.UI.Template
         /// Delete and re-create is way faster than delete one by one.
         /// </summary>
         [ContextMenu("ResetScroll")]
-        public virtual void ResetScroll()
+        public override void ResetScroll()
         {
             StartCoroutine(_ResetScroll());
         }
@@ -168,7 +134,7 @@ namespace WeAreProStars.Core.Manage.UI.Template
         /// Force item at index to click.
         /// </summary>
         /// <param name="index"></param>
-        public virtual void ClickItemAt(int index)
+        public override void ClickItemAt(int index)
         {
             if (0 < index && index < this._items.Count)
                 this._items[index].OnClick();
@@ -177,7 +143,7 @@ namespace WeAreProStars.Core.Manage.UI.Template
         /// <summary>
         /// Click the next item.
         /// </summary>
-        public virtual void ClickNextItem()
+        public override void ClickNextItem()
         {
             if (this._items.Count <= 0) return;
             if (_selectingItem == null) ClickItemAt(0);
@@ -193,7 +159,7 @@ namespace WeAreProStars.Core.Manage.UI.Template
         /// <summary>
         /// Click the next item.
         /// </summary>
-        public virtual void ClickPreviousItem()
+        public override void ClickPreviousItem()
         {
             if (this._items.Count <= 0) return;
             if (_selectingItem == null) ClickItemAt(this._items.Count - 1);
