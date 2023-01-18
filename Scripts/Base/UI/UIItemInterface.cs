@@ -12,6 +12,11 @@ namespace WeAreProStars.Core.Manage.UI.Template
         void Active();
 
         /// <summary>
+        /// Call to click.
+        /// </summary>
+        void OnClick();
+
+        /// <summary>
         /// Get the transform of this item.
         /// </summary>
         /// <returns></returns>

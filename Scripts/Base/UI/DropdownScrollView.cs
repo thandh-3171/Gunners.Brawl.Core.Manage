@@ -137,7 +137,7 @@ namespace WeAreProStars.Core.Manage.UI.Template
         public override void ClickItemAt(int index)
         {
             if (0 < index && index < this._items.Count)
-                this._items[index].Active();
+                this._items[index].OnClick();
         }
 
         /// <summary>
@@ -152,7 +152,7 @@ namespace WeAreProStars.Core.Manage.UI.Template
                 var nextIndex = this._items.IndexOf(_selectingItem);
                 if (nextIndex >= this._items.Count - 1) nextIndex = 0;
                 else nextIndex++;
-                this._items[nextIndex].Active();
+                this._items[nextIndex].OnClick();
             }
         }
 
@@ -168,7 +168,7 @@ namespace WeAreProStars.Core.Manage.UI.Template
                 var previousIndex = this._items.IndexOf(_selectingItem);
                 if (previousIndex <= 0) previousIndex = this._items.Count - 1;
                 else previousIndex--;
-                this._items[previousIndex].Active();
+                this._items[previousIndex].OnClick();
             }
         }
         #endregion
