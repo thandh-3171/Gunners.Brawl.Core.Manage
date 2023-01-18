@@ -20,6 +20,8 @@ namespace WeAreProStars.Core.Manage.UI.Template
     public class ScrollViewTemplate : MonoBehaviour
     {
         #region events
+        public delegate void OnSelectItem(UIItemInterface item);
+        public OnSelectItem onSelectItem;
         public delegate void OnClickItem(UIItemInterface item);
         public OnClickItem onClickItem;
         public delegate void OnClearSelection(UIItemInterface lastItem);
@@ -131,6 +133,12 @@ namespace WeAreProStars.Core.Manage.UI.Template
         {
             this._selectingItem = item;
             if (onClearSelection != null) onClearSelection.Invoke(this._selectingItem);
+            if (onSelectItem != null) onSelectItem.Invoke(this._selectingItem);
+        }
+
+        public virtual void ClickItem(UIItemInterface item)
+        {
+            SelectItem(item);
             if (onClickItem != null) onClickItem.Invoke(this._selectingItem);
         }
 
@@ -140,7 +148,7 @@ namespace WeAreProStars.Core.Manage.UI.Template
         /// </summary>
         public virtual void ClearSeletion()
         {
-            if (onClearSelection != null) 
+            if (onClearSelection != null)
                 onClearSelection.Invoke(this._selectingItem);
         }
 
