@@ -7,9 +7,9 @@ namespace WeAreProStars.Core.Manage.UI.Template
     public interface UIItemInterface
     {
         /// <summary>
-        /// Call to force onclick.
+        /// Call to force active.
         /// </summary>
-        void OnClick();
+        void Active();
 
         /// <summary>
         /// Get the transform of this item.
