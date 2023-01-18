@@ -114,9 +114,12 @@ namespace WeAreProStars.Core.Manage.UI.Template
             }
             GameObject newItem = Instantiate(itemPrefab, content.transform);
             UIItemInterface iItem = newItem.GetComponent<UIItemInterface>();
-            if (iItem != null) iItem.OnPostAdded_SetupUI(data, newItem);
-            _items.Add(iItem);
-            if (autoActive && _items.Count == 1) iItem.OnClick();
+            if (iItem != null)
+            {
+                iItem.OnPostAdded_SetupUI(data, newItem);
+                _items.Add(iItem);
+                if (autoActive && _items.Count == 1) iItem.OnClick();
+            }
             return newItem;
         }
 
