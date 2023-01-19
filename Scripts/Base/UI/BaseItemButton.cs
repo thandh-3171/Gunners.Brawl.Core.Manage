@@ -56,9 +56,14 @@ namespace WeAreProStars.Core.Manage.UI.Template
         }
 
         /// <summary>
-        /// Call to click.
+        /// Call to activate.
         /// </summary>
         public virtual void Active() { }
+
+        /// <summary>
+        /// Call to click.
+        /// </summary>
+        public virtual void OnClick() { }
 
         /// <summary>
         /// Set up data and spread infomation into containers.
