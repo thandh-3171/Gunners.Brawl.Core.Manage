@@ -9,12 +9,12 @@ namespace WeAreProStars.Core.Manage.UI.Template
         /// <summary>
         /// Call to force active.
         /// </summary>
-        void Active();
+        void SelfActive();
 
         /// <summary>
         /// Call to click.
         /// </summary>
-        void OnClick();
+        void SelfClick();
 
         /// <summary>
         /// Get the transform of this item.

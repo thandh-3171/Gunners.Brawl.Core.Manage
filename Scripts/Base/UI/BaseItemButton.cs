@@ -1,3 +1,4 @@
+using Unity.VisualScripting.YamlDotNet.Core.Tokens;
 using UnityEngine;
 
 namespace WeAreProStars.Core.Manage.UI.Template
@@ -58,12 +59,19 @@ namespace WeAreProStars.Core.Manage.UI.Template
         /// <summary>
         /// Call to activate.
         /// </summary>
-        public virtual void Active() { }
+        public virtual void SelfActive()
+        {
+            if (!_selected && onSetSelected != null)
+            {
+                onSetSelected.Invoke();
+                _selected = true;
+            }
+        }
 
         /// <summary>
         /// Call to click.
         /// </summary>
-        public virtual void OnClick() { }
+        public virtual void SelfClick() { }
 
         /// <summary>
         /// Set up data and spread infomation into containers.
@@ -71,7 +79,7 @@ namespace WeAreProStars.Core.Manage.UI.Template
         /// <typeparam name="T"></typeparam>
         /// <param name="data"></param>
         /// <param name="entity"></param>
-        public virtual void OnPostAdded_SetupUI<T>(T data, GameObject entity) { }        
+        public virtual void OnPostAdded_SetupUI<T>(T data, GameObject entity) { }
         #endregion
     }
 }
