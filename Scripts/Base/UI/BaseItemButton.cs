@@ -59,7 +59,7 @@ namespace WeAreProStars.Core.Manage.UI.Template
         /// <summary>
         /// Call to activate.
         /// </summary>
-        public virtual void SelfActive()
+        public virtual void Activate()
         {
             if (!_selected && onSetSelected != null)
             {
@@ -71,7 +71,7 @@ namespace WeAreProStars.Core.Manage.UI.Template
         /// <summary>
         /// Call to click.
         /// </summary>
-        public virtual void SelfClick() { }
+        public virtual void OnClick() { }
 
         /// <summary>
         /// Set up data and spread infomation into containers.

@@ -120,7 +120,7 @@ namespace WeAreProStars.Core.Manage.UI.Template
             {
                 iItem.OnPostAdded_SetupUI(data, newItem);
                 _items.Add(iItem);
-                if (autoActive && _items.Count == 1) iItem.SelfActive();
+                if (autoActive && _items.Count == 1) iItem.Activate();
             }
             return newItem;
         }
@@ -182,7 +182,7 @@ namespace WeAreProStars.Core.Manage.UI.Template
         public virtual void ClickItemAt(int index)
         {
             if (0 < index && index < this._items.Count)
-                this._items[index].SelfClick();
+                this._items[index].OnClick();
         }
 
         /// <summary>
@@ -197,7 +197,7 @@ namespace WeAreProStars.Core.Manage.UI.Template
                 var nextIndex = this._items.IndexOf(_selectingItem);
                 if (nextIndex >= this._items.Count - 1) nextIndex = 0;
                 else nextIndex++;
-                this._items[nextIndex].SelfClick();
+                this._items[nextIndex].OnClick();
             }
         }
 
@@ -213,7 +213,7 @@ namespace WeAreProStars.Core.Manage.UI.Template
                 var previousIndex = this._items.IndexOf(_selectingItem);
                 if (previousIndex <= 0) previousIndex = this._items.Count - 1;
                 else previousIndex--;
-                this._items[previousIndex].SelfClick();
+                this._items[previousIndex].OnClick();
             }
         }
         #endregion
