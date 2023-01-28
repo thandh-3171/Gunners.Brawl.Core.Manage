@@ -75,11 +75,6 @@ namespace WeAreProStars.Core.Manage.UI.Template
         }
 
         /// <summary>
-        /// Call to activate.
-        /// </summary>
-        public override void Activate() { selected = true; }
-
-        /// <summary>
         /// Call to click.
         /// </summary>
         public override void OnClick() { }
