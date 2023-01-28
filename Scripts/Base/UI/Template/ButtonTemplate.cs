@@ -74,7 +74,10 @@ namespace WeAreProStars.Core.Manage.UI.Template
         /// <summary>
         /// Call to perform task of clicking.
         /// </summary>
-        public override void OnClick() { }
+        public override void OnClick()
+        {
+            if (!selected) Activate();
+        }
 
         /// <summary>
         /// Set up data and spread infomation into containers.
