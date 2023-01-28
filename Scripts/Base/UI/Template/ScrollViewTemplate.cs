@@ -37,22 +37,26 @@ namespace WeAreProStars.Core.Manage.UI.Template
         public bool Multiple = false;
         #endregion
 
-        #region Private vars
-        private ScrollRect scrollViewScript;
-        private GameObject scrollView;
-        private GameObject viewPort;
-        private GameObject content;
-        private GameObject contentPrefab;
-        private bool initialized = false;
-        #endregion
-
         #region Public vars
+        /// <summary>
+        /// Readying state.
+        /// </summary>
+        [HideInInspector]
+        public bool initialized = false;
         //[HideInInspector]
         public List<UIItemAbstract> _items = new();
         //[HideInInspector]
         public List<UIItemAbstract> _selectingItems = new();
         //[HideInInspector]
         public UIItemAbstract _indexedItem;
+        #endregion
+
+        #region Private vars
+        private ScrollRect scrollViewScript;
+        private GameObject scrollView;
+        private GameObject viewPort;
+        private GameObject content;
+        private GameObject contentPrefab;
         #endregion
 
         #region Mono
@@ -63,7 +67,6 @@ namespace WeAreProStars.Core.Manage.UI.Template
         #endregion
 
         #region Private methods
-        [ContextMenu("Initialized")]
         private void Initialized()
         {
             StartCoroutine(_Initialized());
@@ -131,7 +134,7 @@ namespace WeAreProStars.Core.Manage.UI.Template
             UIItemAbstract iItem = newItem.GetComponent<UIItemAbstract>();
             if (iItem != null)
             {
-                iItem.OnPostAdded_SetupUI(data, newItem);
+                StartCoroutine(iItem.OnPostAdded_SetupUI(data, newItem));
                 _items.Add(iItem);
                 if (autoActive && _items.Count == 1) SelectItem(iItem);
             }

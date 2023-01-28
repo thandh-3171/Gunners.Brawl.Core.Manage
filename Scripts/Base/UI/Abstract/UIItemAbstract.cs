@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 namespace WeAreProStars.Core.Manage.UI.Template
@@ -6,14 +7,18 @@ namespace WeAreProStars.Core.Manage.UI.Template
     [Serializable]
     public abstract class UIItemAbstract : MonoBehaviour
     {
-        #region vars
-        private UIContentAbstract content;
+        #region events
+        public delegate void OnSetSelected();
+        public OnSetSelected onSetSelected;
+
+        public delegate void OnSetUnSelected();
+        public OnSetUnSelected onSetUnSelected;
         #endregion
 
         #region methods
         /// <summary>
         /// I want every inheritances must override Awake()
-        /// To set up their own container (parent).
+        /// Example : Button needs to set up its own container (parent).
         /// </summary>
         public abstract void Awake();
 
@@ -31,7 +36,7 @@ namespace WeAreProStars.Core.Manage.UI.Template
         /// Data (type T) is the class contain infomation.
         /// Entity is the button or the UI item.
         /// </summary>
-        public abstract void OnPostAdded_SetupUI<T>(T data, GameObject entity);
+        public abstract IEnumerator OnPostAdded_SetupUI<T>(T data, GameObject entity);
         #endregion
     }
 }
