@@ -9,6 +9,20 @@ namespace WeAreProStars.Core.Manage
     [Serializable]
     public abstract class UIContentAbstract : MonoBehaviour
     {
+        #region events
+        // Event right at the moment select an item.
+        public delegate void OnSelectItem(List<UIItemAbstract> items);
+        public OnSelectItem onSelectItem;
+
+        // Event after selecting an item.
+        public delegate void OnClickItem(List<UIItemAbstract> items);
+        public OnClickItem onClickItem;
+
+        // Event of clearing current selection.
+        public delegate void OnClearSelection(List<UIItemAbstract> lastItems);
+        public OnClearSelection onClearSelection;
+        #endregion
+
         #region methods
         /// <summary>
         /// Frequently, I set up prefabs for scroll rect, view port and content gameobject here.

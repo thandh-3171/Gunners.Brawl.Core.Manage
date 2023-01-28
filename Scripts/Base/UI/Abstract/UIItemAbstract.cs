@@ -23,7 +23,7 @@ namespace WeAreProStars.Core.Manage.UI.Template
         public abstract void Awake();
 
         /// <summary>
-        /// Call to click.
+        /// Call to perform task of clicking.
         /// </summary>
         public abstract void OnClick();
 

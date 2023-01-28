@@ -89,7 +89,7 @@ namespace WeAreProStars.Core.Manage.UI.Template
         }
 
         /// <summary>
-        /// Call to click.
+        /// Call to perform task of clicking.
         /// </summary>
         public override void OnClick() { }
 

@@ -18,20 +18,6 @@ namespace WeAreProStars.Core.Manage.UI.Template
 
     public class ScrollViewTemplate : UIContentAbstract
     {
-        #region events
-        // Event right at the moment select an item.
-        public delegate void OnSelectItem(List<UIItemAbstract> items);
-        public OnSelectItem onSelectItem;
-
-        // Event after selecting an item.
-        public delegate void OnClickItem(List<UIItemAbstract> items);
-        public OnClickItem onClickItem;
-
-        // Event of clearing current selection.
-        public delegate void OnClearSelection(List<UIItemAbstract> lastItems);
-        public OnClearSelection onClearSelection;
-        #endregion
-
         #region Serialized
         [SerializeField] GameObject itemPrefab;
         public bool Multiple = false;
@@ -142,7 +128,7 @@ namespace WeAreProStars.Core.Manage.UI.Template
         }
 
         /// <summary>
-        /// Handle when select an item.
+        /// Handle vfx when select an item.
         /// </summary>
         /// <param name="item"></param>
         public override void SelectItem(UIItemAbstract item)
@@ -160,7 +146,7 @@ namespace WeAreProStars.Core.Manage.UI.Template
         }
 
         /// <summary>
-        /// Handle after select an item and move on to the next stage.
+        /// Call to perform vfx task of clicking.
         /// If you want to select, must call SelectItem.
         /// </summary>
         /// <param name="item"></param>
