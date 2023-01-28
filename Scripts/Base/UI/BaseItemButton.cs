@@ -1,10 +1,8 @@
-using Unity.VisualScripting.YamlDotNet.Core.Tokens;
 using UnityEngine;
 
 namespace WeAreProStars.Core.Manage.UI.Template
 {
-    public class BaseItemButton : MonoBehaviour
-        , UIItemInterface
+    public class BaseItemButton : UIItemAbstract
     {
         #region events
         public delegate void OnSetSelected();
@@ -28,7 +26,7 @@ namespace WeAreProStars.Core.Manage.UI.Template
         /// <summary>
         /// Item-Interface of this class. Should be one.
         /// </summary>
-        public UIItemInterface itemInterface;
+        public UIItemAbstract itemInterface;
         #endregion
 
         #region mono
@@ -37,7 +35,7 @@ namespace WeAreProStars.Core.Manage.UI.Template
         /// </summary>
         public virtual void Awake()
         {
-            itemInterface = GetComponent<UIItemInterface>();
+            itemInterface = GetComponent<UIItemAbstract>();
         }
         #endregion
 
@@ -59,12 +57,12 @@ namespace WeAreProStars.Core.Manage.UI.Template
         /// <summary>
         /// Call to activate.
         /// </summary>
-        public virtual void Activate() { selected = true; }
+        public override void Activate() { selected = true; }
 
         /// <summary>
         /// Call to click.
         /// </summary>
-        public virtual void OnClick() { }
+        public override void OnClick() { }
 
         /// <summary>
         /// Set up data and spread infomation into containers.
@@ -72,7 +70,7 @@ namespace WeAreProStars.Core.Manage.UI.Template
         /// <typeparam name="T"></typeparam>
         /// <param name="data"></param>
         /// <param name="entity"></param>
-        public virtual void OnPostAdded_SetupUI<T>(T data, GameObject entity) { }
+        public override void OnPostAdded_SetupUI<T>(T data, GameObject entity) { }
         #endregion
     }
 }

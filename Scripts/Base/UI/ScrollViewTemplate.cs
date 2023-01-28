@@ -20,20 +20,21 @@ namespace WeAreProStars.Core.Manage.UI.Template
     {
         #region events
         // Event right at the moment select an item.
-        public delegate void OnSelectItem(UIItemInterface item);
+        public delegate void OnSelectItem(List<UIItemAbstract> items);
         public OnSelectItem onSelectItem;
 
         // Event after selecting an item.
-        public delegate void OnClickItem(UIItemInterface item);
+        public delegate void OnClickItem(List<UIItemAbstract> items);
         public OnClickItem onClickItem;
 
         // Event of clearing current selection.
-        public delegate void OnClearSelection(UIItemInterface lastItem);
+        public delegate void OnClearSelection(List<UIItemAbstract> lastItems);
         public OnClearSelection onClearSelection;
         #endregion
 
         #region Serialized
         [SerializeField] GameObject itemPrefab;
+        public bool Multiple = false;
         #endregion
 
         #region Private vars
@@ -43,9 +44,12 @@ namespace WeAreProStars.Core.Manage.UI.Template
         private GameObject content;
         private GameObject contentPrefab;
         private bool initialized = false;
+        #endregion
 
-        private List<UIItemInterface> _items = new List<UIItemInterface>();
-        private UIItemInterface _selectingItem;
+        #region Public vars
+        public List<UIItemAbstract> _items = new();
+        public List<UIItemAbstract> _selectingItems = new();
+        public UIItemAbstract _indexedItem;
         #endregion
 
         #region Mono
@@ -88,16 +92,6 @@ namespace WeAreProStars.Core.Manage.UI.Template
             }
             initialized = true;
         }
-
-        /// <summary>
-        /// Scroll view and scroll view template, I don't need this.
-        /// But drop down needs.
-        /// </summary>
-        /// <param name="keep"></param>
-        public virtual void KeepOrDeleteItemPrefab(bool keep = false)
-        {
-
-        }
         #endregion
 
         #region public methods
@@ -120,12 +114,12 @@ namespace WeAreProStars.Core.Manage.UI.Template
                 return null;
             }
             GameObject newItem = Instantiate(itemPrefab, content.transform);
-            UIItemInterface iItem = newItem.GetComponent<UIItemInterface>();
+            UIItemAbstract iItem = newItem.GetComponent<UIItemAbstract>();
             if (iItem != null)
             {
                 iItem.OnPostAdded_SetupUI(data, newItem);
                 _items.Add(iItem);
-                if (autoActive && _items.Count == 1) iItem.Activate();
+                if (autoActive && _items.Count == 1) SelectItem(iItem);
             }
             return newItem;
         }
@@ -134,24 +128,29 @@ namespace WeAreProStars.Core.Manage.UI.Template
         /// Handle when select an item.
         /// </summary>
         /// <param name="item"></param>
-        public virtual void SelectItem(UIItemInterface item)
+        public virtual void SelectItem(UIItemAbstract item)
         {
-            // Clear the current selected item.
-            onClearSelection?.Invoke(this._selectingItem);
-
             // Set current selected item to the next value.
-            this._selectingItem = item;
-            onSelectItem?.Invoke(this._selectingItem);
+            if (this._selectingItems.Count == 0) this._selectingItems.Add(item);
+            else
+            {
+                if (Multiple) this._selectingItems.Add(item);
+                else this._selectingItems[0] = item;
+            }
+            this._indexedItem = item;
+            onClearSelection?.Invoke(this._selectingItems);
+            onSelectItem?.Invoke(this._selectingItems);
         }
 
         /// <summary>
         /// Handle after select an item and move on to the next stage.
+        /// If you want to select, must call SelectItem.
         /// </summary>
         /// <param name="item"></param>
-        public virtual void ClickItem(UIItemInterface item)
+        public virtual void ClickItem(UIItemAbstract item)
         {
             // I may just handle the post click event here.
-            onClickItem?.Invoke(this._selectingItem);
+            onClickItem?.Invoke(this._selectingItems);
         }
 
         /// <summary>
@@ -160,7 +159,7 @@ namespace WeAreProStars.Core.Manage.UI.Template
         /// </summary>
         public virtual void ClearSeletion()
         {
-            onClearSelection?.Invoke(this._selectingItem);
+            onClearSelection?.Invoke(this._selectingItems);
         }
 
         /// <summary>
@@ -184,7 +183,7 @@ namespace WeAreProStars.Core.Manage.UI.Template
             scrollViewScript.content = content.GetComponent<RectTransform>();
             onClickItem = null;
             onClearSelection = null;
-            _items = new List<UIItemInterface>();
+            _items = new List<UIItemAbstract>();
         }
 
         /// <summary>
@@ -200,32 +199,40 @@ namespace WeAreProStars.Core.Manage.UI.Template
         /// <summary>
         /// Click the next item.
         /// </summary>
-        public virtual void ClickNextItem()
+        public virtual void SelectNextItem()
         {
             if (this._items.Count <= 0) return;
-            if (_selectingItem == null) ClickItemAt(0);
+            if (this._indexedItem == null) ClickItemAt(0);
             else
             {
-                var nextIndex = this._items.IndexOf(_selectingItem);
+                var nextIndex = this._items.IndexOf(this._indexedItem);
                 if (nextIndex >= this._items.Count - 1) nextIndex = 0;
                 else nextIndex++;
-                this._items[nextIndex].OnClick();
+                if (!this._selectingItems.Contains(this._items[nextIndex]))
+                {
+                    SelectItem(this._items[nextIndex]);
+                    ClickItem(this._items[nextIndex]);
+                }
             }
         }
 
         /// <summary>
         /// Click the next item.
         /// </summary>
-        public virtual void ClickPreviousItem()
+        public virtual void SelectPreviousItem()
         {
             if (this._items.Count <= 0) return;
-            if (_selectingItem == null) ClickItemAt(this._items.Count - 1);
+            if (this._indexedItem == null) ClickItemAt(this._items.Count - 1);
             else
             {
-                var previousIndex = this._items.IndexOf(_selectingItem);
+                var previousIndex = this._items.IndexOf(this._indexedItem);
                 if (previousIndex <= 0) previousIndex = this._items.Count - 1;
                 else previousIndex--;
-                this._items[previousIndex].OnClick();
+                if (!this._selectingItems.Contains(this._items[previousIndex]))
+                {
+                    SelectItem(this._items[previousIndex]);
+                    ClickItem(this._items[previousIndex]);
+                }
             }
         }
         #endregion
