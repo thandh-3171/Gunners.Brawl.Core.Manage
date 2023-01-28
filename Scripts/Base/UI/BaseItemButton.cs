@@ -23,7 +23,7 @@ namespace WeAreProStars.Core.Manage.UI.Template
             get { return _selected; }
             set { HandleSetSelected(value); }
         }
-        private bool _selected = false;
+        [SerializeField] private bool _selected = false;
 
         /// <summary>
         /// Item-Interface of this class. Should be one.
