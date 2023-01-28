@@ -144,7 +144,6 @@ namespace WeAreProStars.Core.Manage.UI.Template
                         this._selectingItems[0] = item;
                     }
                 }
-
             }
             else
             {

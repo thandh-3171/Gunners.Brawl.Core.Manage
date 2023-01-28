@@ -61,12 +61,12 @@ namespace WeAreProStars.Core.Manage.UI.Template
         /// <summary>
         /// Call to activate. Not the whole click.
         /// </summary>
-        public abstract void Activate();
+        public abstract IEnumerator Activate();
 
         /// <summary>
         /// Call to perform task of clicking.
         /// </summary>
-        public abstract void OnClick();
+        public abstract IEnumerator OnClick();
 
         /// <summary>
         /// Data (type T) is the class contain infomation.

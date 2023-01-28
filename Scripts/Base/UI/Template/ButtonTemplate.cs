@@ -65,8 +65,9 @@ namespace WeAreProStars.Core.Manage.UI.Template
         /// <summary>
         /// Call to perform task of clicking.
         /// </summary>
-        public override void Activate()
+        public override IEnumerator Activate()
         {
+            yield return new WaitUntil(() => this.initialized);
             // Perform vfx when select.
             if (this.content != null) content.Activate(this);
         }
@@ -74,9 +75,10 @@ namespace WeAreProStars.Core.Manage.UI.Template
         /// <summary>
         /// Call to perform task of clicking.
         /// </summary>
-        public override void OnClick()
+        public override IEnumerator OnClick()
         {
-            if (!selected) Activate();
+            yield return new WaitUntil(() => this.initialized);
+            if (!selected) StartCoroutine(Activate());
         }
 
         /// <summary>
@@ -88,7 +90,7 @@ namespace WeAreProStars.Core.Manage.UI.Template
         public override IEnumerator OnPostAdded_SetupUI<T>(T data, GameObject entity)
         {
             yield return new WaitUntil(() => this.initialized);
-            this.button.onClick.AddListener(() => OnClick());
+            this.button.onClick.AddListener(() => StartCoroutine(OnClick()));
         }
         #endregion
     }
