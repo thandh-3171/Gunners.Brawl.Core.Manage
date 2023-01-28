@@ -1,9 +1,7 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.UIElements;
 
 namespace WeAreProStars.Core.Manage.UI.Template
 {
@@ -17,13 +15,19 @@ namespace WeAreProStars.Core.Manage.UI.Template
     //      -> Vertical Bar         // Don't care. May delete
     ///     -> ContentPrefab        // Must UN-enable
     // </summary>
+
     public class ScrollViewTemplate : MonoBehaviour
     {
         #region events
+        // Event right at the moment select an item.
         public delegate void OnSelectItem(UIItemInterface item);
         public OnSelectItem onSelectItem;
+
+        // Event after selecting an item.
         public delegate void OnClickItem(UIItemInterface item);
         public OnClickItem onClickItem;
+
+        // Event of clearing current selection.
         public delegate void OnClearSelection(UIItemInterface lastItem);
         public OnClearSelection onClearSelection;
         #endregion
@@ -57,6 +61,7 @@ namespace WeAreProStars.Core.Manage.UI.Template
         {
             StartCoroutine(_Initialized());
         }
+
         protected virtual IEnumerator _Initialized()
         {
             scrollViewScript = GetComponent<ScrollRect>();
@@ -131,15 +136,22 @@ namespace WeAreProStars.Core.Manage.UI.Template
         /// <param name="item"></param>
         public virtual void SelectItem(UIItemInterface item)
         {
+            // Clear the current selected item.
+            onClearSelection?.Invoke(this._selectingItem);
+
+            // Set current selected item to the next value.
             this._selectingItem = item;
-            if (onClearSelection != null) onClearSelection.Invoke(this._selectingItem);
-            if (onSelectItem != null) onSelectItem.Invoke(this._selectingItem);
+            onSelectItem?.Invoke(this._selectingItem);
         }
 
+        /// <summary>
+        /// Handle after select an item and move on to the next stage.
+        /// </summary>
+        /// <param name="item"></param>
         public virtual void ClickItem(UIItemInterface item)
         {
-            SelectItem(item);
-            if (onClickItem != null) onClickItem.Invoke(this._selectingItem);
+            // I may just handle the post click event here.
+            onClickItem?.Invoke(this._selectingItem);
         }
 
         /// <summary>
@@ -148,8 +160,7 @@ namespace WeAreProStars.Core.Manage.UI.Template
         /// </summary>
         public virtual void ClearSeletion()
         {
-            if (onClearSelection != null)
-                onClearSelection.Invoke(this._selectingItem);
+            onClearSelection?.Invoke(this._selectingItem);
         }
 
         /// <summary>
@@ -160,6 +171,7 @@ namespace WeAreProStars.Core.Manage.UI.Template
         {
             StartCoroutine(_ResetScroll());
         }
+
         IEnumerator _ResetScroll()
         {
             if (!this.initialized) yield return new WaitUntil(() => this.initialized);
