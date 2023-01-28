@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using WeAreProStars.Core.Manage.UI.Template;
@@ -15,8 +14,8 @@ namespace WeAreProStars.Core.Manage
         public OnSelectItem onSelectItem;
 
         // Event after selecting an item.
-        public delegate void OnClickItem(List<UIItemAbstract> items);
-        public OnClickItem onClickItem;
+        //public delegate void OnClickItem(List<UIItemAbstract> items);
+        //public OnClickItem onClickItem;
 
         // Event of clearing current selection.
         public delegate void OnClearSelection(List<UIItemAbstract> lastItems);
@@ -48,7 +47,7 @@ namespace WeAreProStars.Core.Manage
         /// <summary>
         /// To click an item.
         /// </summary>
-        public abstract void ClickItem(UIItemAbstract item);
+        //public abstract void ClickItem(UIItemAbstract item);
 
         /// <summary>
         /// To clear all selection.

@@ -9,13 +9,49 @@ namespace WeAreProStars.Core.Manage.UI.Template
     {
         #region events
         public delegate void OnSetSelected();
-        public OnSetSelected onSetSelected;
-
         public delegate void OnSetUnSelected();
-        public OnSetUnSelected onSetUnSelected;
         #endregion
 
-        #region methods
+        #region public vars
+        /// <summary>
+        /// Set select event.
+        /// </summary>
+        public OnSetSelected onSetSelected;
+        /// <summary>
+        /// Set un-select event.
+        /// </summary>
+        public OnSetUnSelected onSetUnSelected;
+        /// <summary>
+        /// State of being selected.
+        /// </summary>
+        public bool selected
+        {
+            get { return _selected; }
+            set { HandleSetSelected(value); }
+        }
+        /// <summary>
+        /// Serialize for inspecting.
+        /// </summary>
+        [SerializeField] private bool _selected = false;
+        #endregion
+
+        #region private methods
+        /// <summary>
+        /// Handle how to set selected state.
+        /// Value be check first, set after.
+        /// </summary>
+        /// <param name="value"></param>
+        public virtual void HandleSetSelected(bool value)
+        {
+            //If same value, do nothing.
+            if (_selected == value) return;
+            if (!_selected && value) onSetSelected?.Invoke();
+            else if (_selected && !value) onSetUnSelected?.Invoke();
+            _selected = value;
+        }
+        #endregion
+
+        #region abstract methods
         /// <summary>
         /// I want every inheritances must override Awake()
         /// Example : Button needs to set up its own container (parent).

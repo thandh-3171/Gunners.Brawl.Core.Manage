@@ -133,16 +133,19 @@ namespace WeAreProStars.Core.Manage.UI.Template
         /// <param name="item"></param>
         public override void SelectItem(UIItemAbstract item)
         {
-            // Set current selected item to the next value.
-            if (this._selectingItems.Count == 0) this._selectingItems.Add(item);
-            else
+            if (!item.selected)
             {
-                if (Multiple) this._selectingItems.Add(item);
-                else this._selectingItems[0] = item;
+                // Set current selected item to the next value.
+                if (this._selectingItems.Count == 0) this._selectingItems.Add(item);
+                else
+                {
+                    if (Multiple) this._selectingItems.Add(item);
+                    else this._selectingItems[0] = item;
+                }
+                this._indexedItem = item;
+                onClearSelection?.Invoke(this._selectingItems);
+                onSelectItem?.Invoke(this._selectingItems);
             }
-            this._indexedItem = item;
-            onClearSelection?.Invoke(this._selectingItems);
-            onSelectItem?.Invoke(this._selectingItems);
         }
 
         /// <summary>
@@ -150,11 +153,11 @@ namespace WeAreProStars.Core.Manage.UI.Template
         /// If you want to select, must call SelectItem.
         /// </summary>
         /// <param name="item"></param>
-        public override void ClickItem(UIItemAbstract item)
-        {
-            // I may just handle the post click event here.
-            onClickItem?.Invoke(this._selectingItems);
-        }
+        //public override void ClickItem(UIItemAbstract item)
+        //{
+        //    // I may just handle the post click event here.
+        //    onClickItem?.Invoke(this._selectingItems);
+        //}
 
         /// <summary>
         /// Clear the selection.
@@ -183,9 +186,11 @@ namespace WeAreProStars.Core.Manage.UI.Template
             content.transform.SetAsFirstSibling();
             content.name = "Content";
             scrollViewScript.content = content.GetComponent<RectTransform>();
-            onClickItem = null;
+            //onClickItem = null;
             onClearSelection = null;
-            _items = new List<UIItemAbstract>();
+            _items = new();
+            _selectingItems = new();
+            _indexedItem = null;
         }
 
         /// <summary>
@@ -213,7 +218,7 @@ namespace WeAreProStars.Core.Manage.UI.Template
                 if (!this._selectingItems.Contains(this._items[nextIndex]))
                 {
                     SelectItem(this._items[nextIndex]);
-                    ClickItem(this._items[nextIndex]);
+                    //ClickItem(this._items[nextIndex]);
                 }
             }
         }
@@ -233,7 +238,7 @@ namespace WeAreProStars.Core.Manage.UI.Template
                 if (!this._selectingItems.Contains(this._items[previousIndex]))
                 {
                     SelectItem(this._items[previousIndex]);
-                    ClickItem(this._items[previousIndex]);
+                    //ClickItem(this._items[previousIndex]);
                 }
             }
         }
