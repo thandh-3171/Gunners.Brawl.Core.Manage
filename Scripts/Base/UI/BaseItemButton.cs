@@ -51,22 +51,15 @@ namespace WeAreProStars.Core.Manage.UI.Template
         {
             //If same value, do nothing.
             if (_selected == value) return;
-            if (!_selected && value && onSetSelected != null) onSetSelected.Invoke();
-            else if (_selected && !value && onSetUnSelected != null) onSetUnSelected.Invoke();
+            if (!_selected && value) onSetSelected?.Invoke();
+            else if (_selected && !value) onSetUnSelected?.Invoke();
             _selected = value;
         }
 
         /// <summary>
         /// Call to activate.
         /// </summary>
-        public virtual void Activate()
-        {
-            if (!_selected && onSetSelected != null)
-            {
-                onSetSelected.Invoke();
-                _selected = true;
-            }
-        }
+        public virtual void Activate() { selected = true; }
 
         /// <summary>
         /// Call to click.
