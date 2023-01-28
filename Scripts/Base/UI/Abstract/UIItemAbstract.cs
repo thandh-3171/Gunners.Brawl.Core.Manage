@@ -56,7 +56,7 @@ namespace WeAreProStars.Core.Manage.UI.Template
         /// I want every inheritances must override Awake()
         /// Example : Button needs to set up its own container (parent).
         /// </summary>
-        public abstract void Awake();
+        public abstract IEnumerator Start();
 
         /// <summary>
         /// Call to activate. Not the whole click.

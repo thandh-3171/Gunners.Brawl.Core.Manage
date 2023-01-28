@@ -10,7 +10,7 @@ namespace WeAreProStars.Core.Manage.UI.Template
         /// <summary>
         /// Readying state.
         /// </summary>
-        [HideInInspector]
+        //[HideInInspector]
         public bool initialized = false;
         #endregion
 
@@ -34,19 +34,14 @@ namespace WeAreProStars.Core.Manage.UI.Template
         /// <summary>
         /// Must be called first line. And must should be overrided.
         /// </summary>
-        public override void Awake()
+        public override IEnumerator Start()
         {
-            Initialized();
+            yield return StartCoroutine(Initialized());
         }
         #endregion
 
         #region methods
-        private void Initialized()
-        {
-            StartCoroutine(_Initialized());
-        }
-
-        IEnumerator _Initialized()
+        IEnumerator Initialized()
         {
             var time = Time.time;
             yield return new WaitUntil(() =>
