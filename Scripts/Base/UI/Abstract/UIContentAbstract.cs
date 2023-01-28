@@ -10,16 +10,16 @@ namespace WeAreProStars.Core.Manage
     {
         #region events
         // Event right at the moment select an item.
-        public delegate void OnSelectItem(List<UIItemAbstract> items);
-        public OnSelectItem onSelectItem;
+        //public delegate void OnSelectItem(List<UIItemAbstract> items);
+        //public OnSelectItem onSelectItem;
 
         // Event after selecting an item.
         //public delegate void OnClickItem(List<UIItemAbstract> items);
         //public OnClickItem onClickItem;
 
         // Event of clearing current selection.
-        public delegate void OnClearSelection(List<UIItemAbstract> lastItems);
-        public OnClearSelection onClearSelection;
+        //public delegate void OnClearSelection(List<UIItemAbstract> lastItems);
+        //public OnClearSelection onClearSelection;
         #endregion
 
         #region methods
@@ -42,7 +42,7 @@ namespace WeAreProStars.Core.Manage
         /// <summary>
         /// To select an item.
         /// </summary>
-        public abstract void SelectItem(UIItemAbstract item);
+        public abstract void ClickItem(UIItemAbstract item);
 
         /// <summary>
         /// To click an item.

@@ -68,7 +68,7 @@ namespace WeAreProStars.Core.Manage.UI.Template
         public override void OnClick()
         {
             // Perform vfx when select.
-            content?.SelectItem(this);
+            if (this.content != null) content.ClickItem(this);
         }
 
         /// <summary>

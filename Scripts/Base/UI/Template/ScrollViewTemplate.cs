@@ -33,8 +33,6 @@ namespace WeAreProStars.Core.Manage.UI.Template
         public List<UIItemAbstract> _items = new();
         //[HideInInspector]
         public List<UIItemAbstract> _selectingItems = new();
-        //[HideInInspector]
-        public UIItemAbstract _indexedItem;
         #endregion
 
         #region Private vars
@@ -122,7 +120,7 @@ namespace WeAreProStars.Core.Manage.UI.Template
             {
                 StartCoroutine(iItem.OnPostAdded_SetupUI(data, newItem));
                 _items.Add(iItem);
-                if (autoActive && _items.Count == 1) SelectItem(iItem);
+                if (autoActive && _items.Count == 1) iItem.OnClick();
             }
             return newItem;
         }
@@ -131,7 +129,7 @@ namespace WeAreProStars.Core.Manage.UI.Template
         /// Handle vfx when select an item.
         /// </summary>
         /// <param name="item"></param>
-        public override void SelectItem(UIItemAbstract item)
+        public override void ClickItem(UIItemAbstract item)
         {
             if (!item.selected)
             {
@@ -140,12 +138,19 @@ namespace WeAreProStars.Core.Manage.UI.Template
                 else
                 {
                     if (Multiple) this._selectingItems.Add(item);
-                    else this._selectingItems[0] = item;
+                    else
+                    {
+                        this._selectingItems[0].selected = false;
+                        this._selectingItems[0] = item;
+                    }
                 }
-                this._indexedItem = item;
-                onClearSelection?.Invoke(this._selectingItems);
-                onSelectItem?.Invoke(this._selectingItems);
+                
             }
+            else
+            {
+                this._selectingItems.Remove(item);
+            }
+            item.selected = !item.selected;
         }
 
         /// <summary>
@@ -165,7 +170,7 @@ namespace WeAreProStars.Core.Manage.UI.Template
         /// </summary>
         public override void ClearSeletion()
         {
-            onClearSelection?.Invoke(this._selectingItems);
+            //onClearSelection?.Invoke(this._selectingItems);
         }
 
         /// <summary>
@@ -187,10 +192,9 @@ namespace WeAreProStars.Core.Manage.UI.Template
             content.name = "Content";
             scrollViewScript.content = content.GetComponent<RectTransform>();
             //onClickItem = null;
-            onClearSelection = null;
+            //onClearSelection = null;
             _items = new();
             _selectingItems = new();
-            _indexedItem = null;
         }
 
         /// <summary>
@@ -199,8 +203,8 @@ namespace WeAreProStars.Core.Manage.UI.Template
         /// <param name="index"></param>
         public virtual void ClickItemAt(int index)
         {
-            if (0 < index && index < this._items.Count)
-                this._items[index].OnClick();
+            //if (0 < index && index < this._items.Count)
+            //    this._items[index].OnClick();
         }
 
         /// <summary>
@@ -208,19 +212,18 @@ namespace WeAreProStars.Core.Manage.UI.Template
         /// </summary>
         public virtual void SelectNextItem()
         {
-            if (this._items.Count <= 0) return;
-            if (this._indexedItem == null) ClickItemAt(0);
-            else
-            {
-                var nextIndex = this._items.IndexOf(this._indexedItem);
-                if (nextIndex >= this._items.Count - 1) nextIndex = 0;
-                else nextIndex++;
-                if (!this._selectingItems.Contains(this._items[nextIndex]))
-                {
-                    SelectItem(this._items[nextIndex]);
-                    //ClickItem(this._items[nextIndex]);
-                }
-            }
+            //if (this._items.Count <= 0) return;
+            //if (this._indexedItem == null) ClickItemAt(0);
+            //else
+            //{
+            //    var nextIndex = this._items.IndexOf(this._indexedItem);
+            //    if (nextIndex >= this._items.Count - 1) nextIndex = 0;
+            //    else nextIndex++;
+            //    if (!this._selectingItems.Contains(this._items[nextIndex]))
+            //    {
+            //        this._items[nextIndex].OnClick();
+            //    }
+            //}
         }
 
         /// <summary>
@@ -228,19 +231,18 @@ namespace WeAreProStars.Core.Manage.UI.Template
         /// </summary>
         public virtual void SelectPreviousItem()
         {
-            if (this._items.Count <= 0) return;
-            if (this._indexedItem == null) ClickItemAt(this._items.Count - 1);
-            else
-            {
-                var previousIndex = this._items.IndexOf(this._indexedItem);
-                if (previousIndex <= 0) previousIndex = this._items.Count - 1;
-                else previousIndex--;
-                if (!this._selectingItems.Contains(this._items[previousIndex]))
-                {
-                    SelectItem(this._items[previousIndex]);
-                    //ClickItem(this._items[previousIndex]);
-                }
-            }
+            //if (this._items.Count <= 0) return;
+            //if (this._indexedItem == null) ClickItemAt(this._items.Count - 1);
+            //else
+            //{
+            //    var previousIndex = this._items.IndexOf(this._indexedItem);
+            //    if (previousIndex <= 0) previousIndex = this._items.Count - 1;
+            //    else previousIndex--;
+            //    if (!this._selectingItems.Contains(this._items[previousIndex]))
+            //    {
+            //        this._items[previousIndex].OnClick();
+            //    }
+            //}
         }
         #endregion
     }
