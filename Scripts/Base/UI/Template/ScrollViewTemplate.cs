@@ -16,7 +16,7 @@ namespace WeAreProStars.Core.Manage.UI.Template
     ///     -> ContentPrefab        // Must UN-enable
     // </summary>
 
-    public class ScrollViewTemplate : MonoBehaviour
+    public class ScrollViewTemplate : UIContentAbstract
     {
         #region events
         // Event right at the moment select an item.
@@ -47,13 +47,16 @@ namespace WeAreProStars.Core.Manage.UI.Template
         #endregion
 
         #region Public vars
+        //[HideInInspector]
         public List<UIItemAbstract> _items = new();
+        //[HideInInspector]
         public List<UIItemAbstract> _selectingItems = new();
+        //[HideInInspector]
         public UIItemAbstract _indexedItem;
         #endregion
 
         #region Mono
-        private void Awake()
+        public override void Awake()
         {
             Initialized();
         }
@@ -68,12 +71,14 @@ namespace WeAreProStars.Core.Manage.UI.Template
 
         protected virtual IEnumerator _Initialized()
         {
-            scrollViewScript = GetComponent<ScrollRect>();
-            if (scrollViewScript == null)
+            var time = Time.time;
+            yield return new WaitUntil(() => GetComponent<ScrollRect>() != null || Time.time - time > 5f);
+            if (Time.time - time > 5f)
             {
-                Debug.LogWarning("Init error.");
+                Debug.LogWarning("Init error. No Scroll Rect.");
                 yield break;
             }
+            scrollViewScript = GetComponent<ScrollRect>();
             scrollView = scrollViewScript.gameObject;
             viewPort = scrollViewScript.viewport.gameObject;
             content = scrollViewScript.content.gameObject;
@@ -96,12 +101,21 @@ namespace WeAreProStars.Core.Manage.UI.Template
 
         #region public methods
         /// <summary>
+        /// Return the state of this content.
+        /// </summary>
+        /// <returns></returns>
+        public override bool IsInitialized()
+        {
+            return this.initialized;
+        }
+
+        /// <summary>
         /// Add a new Item.
         /// Item should have interface.
         /// If index = -1, add new at the end.
         /// If autoActive == true, set Index value at 01.
         /// </summary>
-        public virtual GameObject AddItem<T>(T data, int index = -1, bool autoActive = true)
+        public override GameObject AddItem<T>(T data, int index = -1, bool autoActive = true)
         {
             if (itemPrefab == null)
             {
@@ -128,7 +142,7 @@ namespace WeAreProStars.Core.Manage.UI.Template
         /// Handle when select an item.
         /// </summary>
         /// <param name="item"></param>
-        public virtual void SelectItem(UIItemAbstract item)
+        public override void SelectItem(UIItemAbstract item)
         {
             // Set current selected item to the next value.
             if (this._selectingItems.Count == 0) this._selectingItems.Add(item);
@@ -147,7 +161,7 @@ namespace WeAreProStars.Core.Manage.UI.Template
         /// If you want to select, must call SelectItem.
         /// </summary>
         /// <param name="item"></param>
-        public virtual void ClickItem(UIItemAbstract item)
+        public override void ClickItem(UIItemAbstract item)
         {
             // I may just handle the post click event here.
             onClickItem?.Invoke(this._selectingItems);
@@ -157,7 +171,7 @@ namespace WeAreProStars.Core.Manage.UI.Template
         /// Clear the selection.
         /// Reset the state of the last picked item.
         /// </summary>
-        public virtual void ClearSeletion()
+        public override void ClearSeletion()
         {
             onClearSelection?.Invoke(this._selectingItems);
         }
@@ -165,8 +179,7 @@ namespace WeAreProStars.Core.Manage.UI.Template
         /// <summary>
         /// Delete and re-create is way faster than delete one by one.
         /// </summary>
-        [ContextMenu("ResetScroll")]
-        public virtual void ResetScroll()
+        public override void ResetContent()
         {
             StartCoroutine(_ResetScroll());
         }

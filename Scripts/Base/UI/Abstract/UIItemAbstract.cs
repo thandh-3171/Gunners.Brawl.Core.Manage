@@ -6,7 +6,17 @@ namespace WeAreProStars.Core.Manage.UI.Template
     [Serializable]
     public abstract class UIItemAbstract : MonoBehaviour
     {
+        #region vars
+        private UIContentAbstract content;
+        #endregion
+
         #region methods
+        /// <summary>
+        /// I want every inheritances must override Awake()
+        /// To set up their own container (parent).
+        /// </summary>
+        public abstract void Awake();
+
         /// <summary>
         /// Call to force active.
         /// </summary>

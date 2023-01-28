@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace WeAreProStars.Core.Manage.UI.Template
 {
-    public class BaseItemButton : UIItemAbstract
+    public class ButtonTemplate : UIItemAbstract
     {
         #region events
         public delegate void OnSetSelected();
@@ -23,23 +23,26 @@ namespace WeAreProStars.Core.Manage.UI.Template
         }
         [SerializeField] private bool _selected = false;
 
-        /// <summary>
-        /// Item-Interface of this class. Should be one.
-        /// </summary>
-        public UIItemAbstract itemInterface;
+        private UIContentAbstract content;
         #endregion
 
         #region mono
         /// <summary>
         /// Must be called first line. And must should be overrided.
         /// </summary>
-        public virtual void Awake()
+        public override void Awake()
         {
-            itemInterface = GetComponent<UIItemAbstract>();
+            Initialized();
         }
         #endregion
 
         #region methods
+        private void Initialized()
+        {
+            content = GetComponentInParent<UIContentAbstract>();
+            if (content == null) Debug.Log("No content?! This is not intended.");
+        }
+
         /// <summary>
         /// Handle how to set selected state.
         /// Value be check first, set after.
