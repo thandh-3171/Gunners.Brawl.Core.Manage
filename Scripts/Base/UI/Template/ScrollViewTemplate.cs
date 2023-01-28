@@ -120,7 +120,7 @@ namespace WeAreProStars.Core.Manage.UI.Template
             {
                 StartCoroutine(iItem.OnPostAdded_SetupUI(data, newItem));
                 _items.Add(iItem);
-                if (autoActive && _items.Count == 1) iItem.OnClick();
+                if (autoActive && _items.Count == 1) iItem.Activate();
             }
             return newItem;
         }
@@ -129,7 +129,7 @@ namespace WeAreProStars.Core.Manage.UI.Template
         /// Handle vfx when select an item.
         /// </summary>
         /// <param name="item"></param>
-        public override void ClickItem(UIItemAbstract item)
+        public override void Activate(UIItemAbstract item)
         {
             if (!item.selected)
             {
@@ -144,7 +144,7 @@ namespace WeAreProStars.Core.Manage.UI.Template
                         this._selectingItems[0] = item;
                     }
                 }
-                
+
             }
             else
             {
@@ -154,15 +154,10 @@ namespace WeAreProStars.Core.Manage.UI.Template
         }
 
         /// <summary>
-        /// Call to perform vfx task of clicking.
-        /// If you want to select, must call SelectItem.
+        /// Handle vfx when select an item.
         /// </summary>
         /// <param name="item"></param>
-        //public override void ClickItem(UIItemAbstract item)
-        //{
-        //    // I may just handle the post click event here.
-        //    onClickItem?.Invoke(this._selectingItems);
-        //}
+        public override void ClickItem(UIItemAbstract item) { }
 
         /// <summary>
         /// Clear the selection.

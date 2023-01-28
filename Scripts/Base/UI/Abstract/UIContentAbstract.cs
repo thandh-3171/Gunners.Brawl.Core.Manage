@@ -40,14 +40,14 @@ namespace WeAreProStars.Core.Manage
         public abstract GameObject AddItem<T>(T data, int index = -1, bool autoActive = true);
 
         /// <summary>
-        /// To select an item.
+        /// To activate an item.
         /// </summary>
-        public abstract void ClickItem(UIItemAbstract item);
+        public abstract void Activate(UIItemAbstract item);
 
         /// <summary>
         /// To click an item.
         /// </summary>
-        //public abstract void ClickItem(UIItemAbstract item);
+        public abstract void ClickItem(UIItemAbstract item);
 
         /// <summary>
         /// To clear all selection.

@@ -59,6 +59,11 @@ namespace WeAreProStars.Core.Manage.UI.Template
         public abstract void Awake();
 
         /// <summary>
+        /// Call to activate. Not the whole click.
+        /// </summary>
+        public abstract void Activate();
+
+        /// <summary>
         /// Call to perform task of clicking.
         /// </summary>
         public abstract void OnClick();

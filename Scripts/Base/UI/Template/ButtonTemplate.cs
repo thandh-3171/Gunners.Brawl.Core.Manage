@@ -10,7 +10,7 @@ namespace WeAreProStars.Core.Manage.UI.Template
         /// <summary>
         /// Readying state.
         /// </summary>
-        //[HideInInspector]
+        [HideInInspector]
         public bool initialized = false;
         #endregion
 
@@ -65,11 +65,16 @@ namespace WeAreProStars.Core.Manage.UI.Template
         /// <summary>
         /// Call to perform task of clicking.
         /// </summary>
-        public override void OnClick()
+        public override void Activate()
         {
             // Perform vfx when select.
-            if (this.content != null) content.ClickItem(this);
+            if (this.content != null) content.Activate(this);
         }
+
+        /// <summary>
+        /// Call to perform task of clicking.
+        /// </summary>
+        public override void OnClick() { }
 
         /// <summary>
         /// Set up data and spread infomation into containers.
@@ -80,6 +85,7 @@ namespace WeAreProStars.Core.Manage.UI.Template
         public override IEnumerator OnPostAdded_SetupUI<T>(T data, GameObject entity)
         {
             yield return new WaitUntil(() => this.initialized);
+            this.button.onClick.AddListener(() => OnClick());
         }
         #endregion
     }
