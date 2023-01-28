@@ -120,7 +120,7 @@ namespace WeAreProStars.Core.Manage.UI.Template
             {
                 StartCoroutine(iItem.OnPostAdded_SetupUI(data, newItem));
                 _items.Add(iItem);
-                if (autoActive && _items.Count == 1) iItem.Activate();
+                if (autoActive && _items.Count == 1) StartCoroutine(iItem.Activate());
             }
             return newItem;
         }
