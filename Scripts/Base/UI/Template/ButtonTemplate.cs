@@ -20,12 +20,26 @@ namespace WeAreProStars.Core.Manage.UI.Template
             get { return _selected; }
             set { HandleSetSelected(value); }
         }
+        /// <summary>
+        /// Serialize for inspecting.
+        /// </summary>
         [SerializeField] private bool _selected = false;
         #endregion
 
         #region private vars
+        /// <summary>
+        /// The parent.
+        /// </summary>
         protected UIContentAbstract content;
-        protected Button button;
+        /// <summary>
+        /// Button component.
+        /// </summary>
+        public Button button
+        {
+            get { return _button; }
+            private set { _button = value; }
+        }
+        private Button _button;
         #endregion
 
         #region mono
