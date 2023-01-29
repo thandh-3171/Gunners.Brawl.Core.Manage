@@ -1,6 +1,8 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using MEC;
 
 namespace WeAreProStars.Core.Manage.UI.Template
 {
@@ -34,17 +36,17 @@ namespace WeAreProStars.Core.Manage.UI.Template
         /// <summary>
         /// Must be called first line. And must should be overrided.
         /// </summary>
-        public override IEnumerator Start()
+        public override void Awake()
         {
-            yield return StartCoroutine(Initialized());
+            Timing.RunCoroutine(_Initialized());
         }
         #endregion
 
         #region methods
-        IEnumerator Initialized()
+        IEnumerator<float> _Initialized()
         {
             var time = Time.time;
-            yield return new WaitUntil(() =>
+            yield return Timing.WaitUntilTrue(() =>
             (GetComponentInParent<UIContentAbstract>() != null && GetComponent<Button>() != null)
             || Time.time - time > 5f);
             if (Time.time - time > 5f)
@@ -60,9 +62,9 @@ namespace WeAreProStars.Core.Manage.UI.Template
         /// <summary>
         /// Call to perform task of clicking.
         /// </summary>
-        public override IEnumerator Activate()
+        public override IEnumerator<float> Activate()
         {
-            yield return new WaitUntil(() => this.initialized);
+            yield return Timing.WaitUntilTrue(() => this.initialized);
             // Perform vfx when select.
             if (this.content != null) content.Activate(this);
         }
@@ -70,9 +72,9 @@ namespace WeAreProStars.Core.Manage.UI.Template
         /// <summary>
         /// Call to perform task of clicking.
         /// </summary>
-        public override IEnumerator OnClick()
+        public override IEnumerator<float> OnClick()
         {
-            yield return new WaitUntil(() => this.initialized);
+            yield return Timing.WaitUntilTrue(() => this.initialized);
             if (!selected) StartCoroutine(Activate());
         }
 
@@ -82,9 +84,9 @@ namespace WeAreProStars.Core.Manage.UI.Template
         /// <typeparam name="T"></typeparam>
         /// <param name="data"></param>
         /// <param name="entity"></param>
-        public override IEnumerator OnPostAdded_SetupUI<T>(T data, GameObject entity)
+        public override IEnumerator<float> OnPostAdded_SetupUI<T>(T data, GameObject entity)
         {
-            yield return new WaitUntil(() => this.initialized);
+            yield return Timing.WaitUntilTrue(() => this.initialized);
             this.button.onClick.AddListener(() => StartCoroutine(OnClick()));
         }
         #endregion

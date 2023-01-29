@@ -22,17 +22,42 @@ namespace WeAreProStars.Core.Manage
         //public OnClearSelection onClearSelection;
         #endregion
 
+        #region public vars
+        /// <summary>
+        /// State of being initialized.
+        /// </summary>
+        public bool initialized
+        {
+            get { return _initialized; }
+            set { HandleSetInitialized(value); }
+        }
+        /// <summary>
+        /// Serialize for inspecting.
+        /// </summary>
+        [SerializeField] private bool _initialized = false;
+        #endregion
+
+        #region private methods
+        /// <summary>
+        /// Handle how to set initialized state.
+        /// Value be check first, set after.
+        /// </summary>
+        /// <param name="value"></param>
+        public virtual void HandleSetInitialized(bool value)
+        {
+            //If same value, do nothing.
+            if (_initialized == value) return;
+            //if (!_initialized && value) onSetSelected?.Invoke();
+            //else if (_initialized && !value) onSetUnSelected?.Invoke();
+            _initialized = value;
+        }
+        #endregion
+
         #region methods
         /// <summary>
         /// Frequently, I set up prefabs for scroll rect, view port and content gameobject here.
         /// </summary>
         public abstract void Awake();
-
-        /// <summary>
-        /// Getting the ready state of this content.
-        /// </summary>
-        /// <returns></returns>
-        public abstract bool IsInitialized();
 
         /// <summary>
         /// To add an item.

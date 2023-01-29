@@ -1,7 +1,9 @@
 {
     "name": "WeAreProStars.Core.Manage",
     "rootNamespace": "WeAreProStars.Core.Manage",
-    "references": [],
+    "references": [
+        "GUID:87cd42b1906f44a8e9eaa73f04fd74f7"
+    ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,

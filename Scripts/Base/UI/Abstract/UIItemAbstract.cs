@@ -1,5 +1,5 @@
 using System;
-using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace WeAreProStars.Core.Manage.UI.Template
@@ -56,23 +56,23 @@ namespace WeAreProStars.Core.Manage.UI.Template
         /// I want every inheritances must override Awake()
         /// Example : Button needs to set up its own container (parent).
         /// </summary>
-        public abstract IEnumerator Start();
+        public abstract void Awake();
 
         /// <summary>
         /// Call to activate. Not the whole click.
         /// </summary>
-        public abstract IEnumerator Activate();
+        public abstract IEnumerator<float> Activate();
 
         /// <summary>
         /// Call to perform task of clicking.
         /// </summary>
-        public abstract IEnumerator OnClick();
+        public abstract IEnumerator<float> OnClick();
 
         /// <summary>
         /// Data (type T) is the class contain infomation.
         /// Entity is the button or the UI item.
         /// </summary>
-        public abstract IEnumerator OnPostAdded_SetupUI<T>(T data, GameObject entity);
+        public abstract IEnumerator<float> OnPostAdded_SetupUI<T>(T data, GameObject entity);
         #endregion
     }
 }

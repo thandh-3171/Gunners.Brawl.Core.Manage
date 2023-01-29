@@ -1,7 +1,7 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using MEC;
 
 namespace WeAreProStars.Core.Manage.UI.Template
 {
@@ -24,11 +24,6 @@ namespace WeAreProStars.Core.Manage.UI.Template
         #endregion
 
         #region Public vars
-        /// <summary>
-        /// Readying state.
-        /// </summary>
-        [HideInInspector]
-        public bool initialized = false;
         //[HideInInspector]
         public List<UIItemAbstract> _items = new();
         //[HideInInspector]
@@ -44,22 +39,20 @@ namespace WeAreProStars.Core.Manage.UI.Template
         #endregion
 
         #region Mono
+        /// <summary>
+        /// Must be called first line. And must should be overrided.
+        /// </summary>
         public override void Awake()
         {
-            Initialized();
+            Timing.RunCoroutine(_Initialized());
         }
         #endregion
 
         #region Private methods
-        private void Initialized()
-        {
-            StartCoroutine(_Initialized());
-        }
-
-        protected virtual IEnumerator _Initialized()
+        IEnumerator<float> _Initialized()
         {
             var time = Time.time;
-            yield return new WaitUntil(() => GetComponent<ScrollRect>() != null || Time.time - time > 5f);
+            yield return Timing.WaitUntilTrue(() => GetComponent<ScrollRect>() != null || Time.time - time > 5f);
             if (Time.time - time > 5f)
             {
                 Debug.LogWarning("Init error. No Scroll Rect.");
@@ -75,7 +68,7 @@ namespace WeAreProStars.Core.Manage.UI.Template
             for (int child = 0; child < deleteChild.Count; child++)
                 if (Application.isPlaying) Destroy(deleteChild[child].gameObject);
                 else DestroyImmediate(deleteChild[child].gameObject);
-            yield return new WaitUntil(() => content.transform.childCount == 0);
+            yield return Timing.WaitUntilTrue(() => content.transform.childCount == 0);
             if (contentPrefab == null)
             {
                 contentPrefab = Instantiate(content, scrollView.transform);
@@ -87,15 +80,6 @@ namespace WeAreProStars.Core.Manage.UI.Template
         #endregion
 
         #region public methods
-        /// <summary>
-        /// Return the state of this content.
-        /// </summary>
-        /// <returns></returns>
-        public override bool IsInitialized()
-        {
-            return this.initialized;
-        }
-
         /// <summary>
         /// Add a new Item.
         /// Item should have interface.
@@ -118,12 +102,12 @@ namespace WeAreProStars.Core.Manage.UI.Template
             UIItemAbstract iItem = newItem.GetComponent<UIItemAbstract>();
             if (iItem != null)
             {
-                StartCoroutine(iItem.OnPostAdded_SetupUI(data, newItem));
+                Timing.RunCoroutine(iItem.OnPostAdded_SetupUI(data, newItem));
                 _items.Add(iItem);
                 if (autoActive && _items.Count == 1)
                 {
                     Debug.Log("First Activate.");
-                    StartCoroutine(iItem.Activate());
+                    Timing.RunCoroutine(iItem.Activate());
                 }
             }
             return newItem;
@@ -176,12 +160,12 @@ namespace WeAreProStars.Core.Manage.UI.Template
         /// </summary>
         public override void ResetContent()
         {
-            StartCoroutine(_ResetScroll());
+            Timing.RunCoroutine(_ResetScroll());
         }
 
-        IEnumerator _ResetScroll()
+        IEnumerator<float> _ResetScroll()
         {
-            if (!this.initialized) yield return new WaitUntil(() => this.initialized);
+            if (!this.initialized) yield return Timing.WaitUntilTrue(() => this.initialized);
             if (Application.isPlaying) Destroy(content.gameObject);
             else DestroyImmediate(content.gameObject);
             content = Instantiate(contentPrefab, viewPort.transform);
