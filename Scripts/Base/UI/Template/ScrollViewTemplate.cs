@@ -142,25 +142,45 @@ namespace WeAreProStars.Core.Manage.UI.Template
         /// <param name="item"></param>
         public override void Activate(UIItemAbstract item)
         {
+            if (!Multiple) SingleChoiceActivate(item);
+            else MultipleChoiceActivate(item);
+        }
+
+        /// <summary>
+        /// Activate with multiple style. (Like : Button)
+        /// </summary>
+        /// <param name="item"></param>
+        private void SingleChoiceActivate(UIItemAbstract item)
+        {
+            // False to True.
             if (!item.selected)
             {
-                // Set current selected item to the next value.
-                if (this._selectingItems.Count == 0) this._selectingItems.Add(item);
+                // None selected.
+                if (this._selectingItems.Count == 0)
+                {
+                    this._selectingItems.Add(item);
+                }
+                // Being selected.
                 else
                 {
-                    if (Multiple) this._selectingItems.Add(item);
-                    else
-                    {
-                        this._selectingItems[0].selected = false;
-                        this._selectingItems[0] = item;
-                    }
+                    this._selectingItems[0].selected = false;
+                    this._selectingItems[0] = item;
                 }
             }
+            // True to False.
             else
             {
                 this._selectingItems.Remove(item);
             }
             item.selected = !item.selected;
+        }
+
+        /// <summary>
+        /// Activate with multiple style. (Like : Toggle)
+        /// </summary>        
+        private void MultipleChoiceActivate(UIItemAbstract item)
+        {
+            //ToDo :
         }
 
         /// <summary>
