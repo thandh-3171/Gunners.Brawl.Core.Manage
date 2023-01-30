@@ -102,7 +102,7 @@ namespace WeAreProStars.Core.Manage.UI.Template
             UIItemAbstract iItem = newItem.GetComponent<UIItemAbstract>();
             if (iItem != null)
             {
-                Timing.RunCoroutine(iItem.OnPostAdded_SetupUI(data, newItem));
+                Timing.RunCoroutine(iItem.OnPostAdded_SetupUI(data, newItem).CancelWith(newItem));
                 _items.Add(iItem);
                 if (autoActive && _items.Count == 1)
                 {
