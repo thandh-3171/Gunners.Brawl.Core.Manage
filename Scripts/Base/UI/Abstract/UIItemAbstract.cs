@@ -12,7 +12,7 @@ namespace WeAreProStars.Core.Manage.UI.Template
         public delegate void OnSetUnSelected();
         #endregion
 
-        #region public vars
+        #region public vars        
         /// <summary>
         /// Set select event.
         /// </summary>
@@ -21,6 +21,11 @@ namespace WeAreProStars.Core.Manage.UI.Template
         /// Set un-select event.
         /// </summary>
         public OnSetUnSelected onSetUnSelected;
+        /// <summary>
+        /// Readying state.
+        /// </summary>
+        //[HideInInspector]
+        public bool initialized = false;
         /// <summary>
         /// State of being selected.
         /// </summary>
@@ -55,8 +60,17 @@ namespace WeAreProStars.Core.Manage.UI.Template
         /// <summary>
         /// I want every inheritances must override Awake()
         /// Example : Button needs to set up its own container (parent).
+        /// Don't use this ever. Far too unstable while using with coroutine.
+        /// GameObject could be hidden unexpectedly.
+        /// Todo : Use Initilize.
         /// </summary>
-        public abstract void Awake();
+        /// public abstract void Awake();
+        
+        /// <summary>
+        /// Data (type T) is the class contain infomation.
+        /// Entity is the button or the UI item.
+        /// </summary>
+        public abstract IEnumerator<float> Initialized();
 
         /// <summary>
         /// Call to activate. Not the whole click.

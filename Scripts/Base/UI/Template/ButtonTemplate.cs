@@ -8,12 +8,7 @@ namespace WeAreProStars.Core.Manage.UI.Template
 {
     public class ButtonTemplate : UIItemAbstract
     {
-        #region public vars
-        /// <summary>
-        /// Readying state.
-        /// </summary>
-        //[HideInInspector]
-        public bool initialized = false;
+        #region public vars        
         #endregion
 
         #region private vars
@@ -36,14 +31,19 @@ namespace WeAreProStars.Core.Manage.UI.Template
         /// <summary>
         /// Must be called first line. And must should be overrided.
         /// </summary>
-        public override void Awake()
-        {
-            Timing.RunCoroutine(_Initialized());
-        }
+        // public override void Awake()
+        // {            
+            // Don't ever call init in Awake() again.
+            // So much unstable while using with MEC Coroutine or any coroutine.
+            // Must/should call as followed : 
+            // => Add -> Init -> OnPostInit.
+            // Code :
+            // Timing.RunCoroutine(_Initialized());
+        // }
         #endregion
 
         #region methods
-        IEnumerator<float> _Initialized()
+        public override IEnumerator<float> Initialized()
         {
             var time = Time.time;
             yield return Timing.WaitUntilTrue(() =>
