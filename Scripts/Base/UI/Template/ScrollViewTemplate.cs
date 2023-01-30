@@ -99,31 +99,42 @@ namespace WeAreProStars.Core.Manage.UI.Template
                 return null;
             }
             GameObject newItem = Instantiate(itemPrefab, content.transform);
-            Timing.RunCoroutine(_InitializingNewItem<T>(newItem, data, index, autoActive));
-            return newItem;
-        }
-
-        private IEnumerator<float> _InitializingNewItem<T>(GameObject newItem, T data, int index = -1, bool autoActive = true)
-        {
             UIItemAbstract iItem = newItem.GetComponent<UIItemAbstract>();
+            _items.Add(iItem);
             if (iItem != null)
             {
-                yield return Timing.WaitUntilDone(Timing.RunCoroutine(iItem.Initialized()
-                    //Use this to bypass error.
-                    //.CancelWith(newItem)
-                    ));
-                yield return Timing.WaitUntilDone(Timing.RunCoroutine(iItem.OnPostAdded_SetupUI(data, newItem)
-                    //.CancelWith(newItem)
-                    ));
-                _items.Add(iItem);
+                iItem.Initialized();
+                iItem.OnPostQueueAdded_SetupUI(data, newItem);
                 if (autoActive && _items.Count == 1)
-                {                    
-                    yield return Timing.WaitUntilDone(Timing.RunCoroutine(iItem.Activate()));
+                {
+                    iItem.ActivateQueue();
                     Debug.Log("First Activate.");
                 }
             }
-            yield break;
+            return newItem;
         }
+
+        //private IEnumerator<float> _InitializingNewItem<T>(GameObject newItem, T data, int index = -1, bool autoActive = true)
+        //{
+        //    UIItemAbstract iItem = newItem.GetComponent<UIItemAbstract>();
+        //    if (iItem != null)
+        //    {
+        //        yield return Timing.WaitUntilDone(Timing.RunCoroutine(iItem.Initialized()
+        //            //Use this to bypass error.
+        //            //.CancelWith(newItem)
+        //            ));
+        //        yield return Timing.WaitUntilDone(Timing.RunCoroutine(iItem.OnPostAdded_SetupUI(data, newItem)
+        //            //.CancelWith(newItem)
+        //            ));
+        //        _items.Add(iItem);
+        //        if (autoActive && _items.Count == 1)
+        //        {
+        //            yield return Timing.WaitUntilDone(Timing.RunCoroutine(iItem.Activate()));
+        //            Debug.Log("First Activate.");
+        //        }
+        //    }
+        //    yield break;
+        //}
 
         /// <summary>
         /// Handle vfx when select an item.

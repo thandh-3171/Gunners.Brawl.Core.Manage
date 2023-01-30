@@ -65,28 +65,52 @@ namespace WeAreProStars.Core.Manage.UI.Template
         /// Todo : Use Initilize.
         /// </summary>
         /// public abstract void Awake();
-        
+
         /// <summary>
         /// Data (type T) is the class contain infomation.
         /// Entity is the button or the UI item.
         /// </summary>
-        public abstract IEnumerator<float> Initialized();
+        //public abstract IEnumerator<float> Initialized();
+        public abstract void Initialized();
 
         /// <summary>
-        /// Call to activate. Not the whole click.
-        /// </summary>
-        public abstract IEnumerator<float> Activate();
+        /// Call to activate. 
+        /// Not the whole click.
+        /// Require initialized.
+        /// </summary>        
+        public abstract void Activate();
+
+        /// <summary>
+        /// Wait for initialized.
+        /// </summary>        
+        public abstract void ActivateQueue();
+
+        /// <summary>
+        /// Wait for initialized.
+        /// </summary>        
+        public abstract IEnumerator<float> _ActivateQueue();
 
         /// <summary>
         /// Call to perform task of clicking.
         /// </summary>
-        public abstract IEnumerator<float> OnClick();
+        //public abstract IEnumerator<float> OnClick();
+        public abstract void OnClick();
 
         /// <summary>
         /// Data (type T) is the class contain infomation.
         /// Entity is the button or the UI item.
-        /// </summary>
-        public abstract IEnumerator<float> OnPostAdded_SetupUI<T>(T data, GameObject entity);
+        /// </summary>        
+        public abstract void OnPostAdded_SetupUI<T>(T data, GameObject entity);
+
+        /// <summary>
+        /// Wait for initialized.
+        /// </summary>        
+        public abstract void OnPostQueueAdded_SetupUI<T>(T data, GameObject entity);
+
+        /// <summary>
+        /// Wait for initialized.
+        /// </summary>        
+        public abstract IEnumerator<float> _OnPostQueueAdded_SetupUI<T>(T data, GameObject entity);
         #endregion
     }
 }
