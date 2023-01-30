@@ -61,7 +61,9 @@ namespace WeAreProStars.Core.Manage.UI.Template
         public override void Initialized()
         {
             this.content = GetComponentInParent<UIContentAbstract>();
+            if (this.content == null) Debug.Log("Null content.");
             this.button = GetComponent<Button>();
+            if (this.button == null) Debug.Log("Null button.");
             this.initialized = true;
         }
 
