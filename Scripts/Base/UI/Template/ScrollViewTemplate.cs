@@ -244,13 +244,12 @@ namespace WeAreProStars.Core.Manage.UI.Template
         /// </summary>
         public override void ResetContent()
         {
-            Timing.RunCoroutine(_ResetScroll());
+            HandleResetContent = Timing.RunCoroutine(_ResetScroll());
         }
 
         IEnumerator<float> _ResetScroll()
         {
-            if (!this.initialized) yield return Timing.WaitUntilTrue(() => this.initialized);
-            this.initialized = false;
+            yield return Timing.WaitUntilTrue(() => this.initialized);
             if (Application.isPlaying) Destroy(content.gameObject);
             else DestroyImmediate(content.gameObject);
             content = Instantiate(contentPrefab, viewPort.transform);
@@ -261,7 +260,6 @@ namespace WeAreProStars.Core.Manage.UI.Template
 
             _items = new();
             _selectingItems = new();
-            this.initialized = true;
         }
 
         /// <summary>
