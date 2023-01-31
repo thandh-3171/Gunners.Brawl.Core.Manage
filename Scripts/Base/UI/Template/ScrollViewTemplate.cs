@@ -81,12 +81,20 @@ namespace WeAreProStars.Core.Manage.UI.Template
 
         #region public methods
         /// <summary>
-        /// Add a new Item.
+        /// Add a new item asyncly.
+        /// </summary>
+        public override void AddQueueItem<T>(T data, int index = -1, bool autoActive = true)
+        {
+            //if (!en)
+        }
+
+        /// <summary>
+        /// Add a new Item and return it.
         /// Item should have interface.
         /// If index = -1, add new at the end.
         /// If autoActive == true, set Index value at 01.
         /// </summary>
-        public override GameObject AddItem<T>(T data, int index = -1, bool autoActive = true)
+        public override GameObject AddReturnItem<T>(T data, int index = -1, bool autoActive = true)
         {
             if (itemPrefab == null)
             {

@@ -60,9 +60,20 @@ namespace WeAreProStars.Core.Manage
         public abstract void Awake();
 
         /// <summary>
+        /// To add an item.        
+        /// </summary>
+        public abstract void AddQueueItem<T>(T data, int index = -1, bool autoActive = true);
+
+        /// <summary>
+        /// To add an item.
+        /// /// And return.
+        /// </summary>
+        public abstract GameObject AddReturnItem<T>(T data, int index = -1, bool autoActive = true);
+
+        /// <summary>
         /// To add an item.
         /// </summary>
-        public abstract GameObject AddItem<T>(T data, int index = -1, bool autoActive = true);
+        //public abstract void AddItem<T>(T data, int index = -1, bool autoActive = true);
 
         /// <summary>
         /// To activate an item.

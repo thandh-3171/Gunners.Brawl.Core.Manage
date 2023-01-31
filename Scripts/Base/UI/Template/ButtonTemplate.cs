@@ -82,7 +82,7 @@ namespace WeAreProStars.Core.Manage.UI.Template
         /// </summary>        
         public override void ActivateQueue()
         {
-            if (!this.enabled)
+            if (!this.enabled || !gameObject.activeSelf)
             {
                 Debug.Log("Not enabled. Can't run.");
                 return;
@@ -130,7 +130,7 @@ namespace WeAreProStars.Core.Manage.UI.Template
         /// </summary>        
         public override void OnPostQueueAdded_SetupUI<T>(T data, GameObject entity)
         {
-            if (!this.enabled)
+            if (!this.enabled || !gameObject.activeSelf)
             {
                 Debug.Log("Not enabled. Can't run.");
                 return;
@@ -143,6 +143,11 @@ namespace WeAreProStars.Core.Manage.UI.Template
         /// </summary>        
         public override IEnumerator<float> _OnPostQueueAdded_SetupUI<T>(T data, GameObject entity)
         {
+            if (!this.enabled || !gameObject.activeSelf)
+            {
+                Debug.Log("Not enabled. Can't run.");
+                yield break;
+            }
             yield return Timing.WaitUntilTrue(() => this.initialized);
             OnPostAdded_SetupUI<T>(data, entity);
         }

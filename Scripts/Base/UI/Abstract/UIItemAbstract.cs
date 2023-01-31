@@ -67,10 +67,16 @@ namespace WeAreProStars.Core.Manage.UI.Template
         /// public abstract void Awake();
 
         /// <summary>
+        /// I don't want ui item to be un-enable, hidden of not-active-self ever.
+        /// I will warn of this. Every time.
+        /// </summary>
+        /// public abstract void OnDisable();
+
+        /// <summary>
         /// Data (type T) is the class contain infomation.
         /// Entity is the button or the UI item.
         /// </summary>
-        //public abstract IEnumerator<float> Initialized();
+        /// public abstract IEnumerator<float> Initialized();
         public abstract void Initialized();
 
         /// <summary>
@@ -110,7 +116,7 @@ namespace WeAreProStars.Core.Manage.UI.Template
         /// <summary>
         /// Wait for initialized.
         /// </summary>        
-        public abstract IEnumerator<float> _OnPostQueueAdded_SetupUI<T>(T data, GameObject entity);
+        public abstract IEnumerator<float> _OnPostQueueAdded_SetupUI<T>(T data, GameObject entity);        
         #endregion
     }
 }
