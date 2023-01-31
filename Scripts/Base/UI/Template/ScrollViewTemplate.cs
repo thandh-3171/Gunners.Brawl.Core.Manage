@@ -36,7 +36,7 @@ namespace WeAreProStars.Core.Manage.UI.Template
         private GameObject viewPort;
         private GameObject content;
         private GameObject contentPrefab;
-        #endregion
+        #endregion        
 
         #region Mono
         /// <summary>
@@ -242,14 +242,14 @@ namespace WeAreProStars.Core.Manage.UI.Template
         /// Delete and re-create is way faster than delete one by one.
         /// </summary>
         public override void ResetContent()
-        {
-            this.initialized = false;
+        {            
             Timing.RunCoroutine(_ResetScroll());
         }
 
         IEnumerator<float> _ResetScroll()
         {
             if (!this.initialized) yield return Timing.WaitUntilTrue(() => this.initialized);
+            this.initialized = false;
             if (Application.isPlaying) Destroy(content.gameObject);
             else DestroyImmediate(content.gameObject);
             content = Instantiate(contentPrefab, viewPort.transform);
