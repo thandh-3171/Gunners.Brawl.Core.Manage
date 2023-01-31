@@ -82,6 +82,11 @@ namespace WeAreProStars.Core.Manage.UI.Template
         /// </summary>        
         public override void ActivateQueue()
         {
+            if (!this.enabled)
+            {
+                Debug.Log("Not enabled. Can't run.");
+                return;
+            }
             Timing.RunCoroutine(_ActivateQueue());
         }
 
@@ -125,6 +130,11 @@ namespace WeAreProStars.Core.Manage.UI.Template
         /// </summary>        
         public override void OnPostQueueAdded_SetupUI<T>(T data, GameObject entity)
         {
+            if (!this.enabled)
+            {
+                Debug.Log("Not enabled. Can't run.");
+                return;
+            }
             Timing.RunCoroutine(_OnPostQueueAdded_SetupUI<T>(data, entity));
         }
 
