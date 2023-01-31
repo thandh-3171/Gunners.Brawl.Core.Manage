@@ -243,6 +243,7 @@ namespace WeAreProStars.Core.Manage.UI.Template
         /// </summary>
         public override void ResetContent()
         {
+            this.initialized = false;
             Timing.RunCoroutine(_ResetScroll());
         }
 
@@ -256,10 +257,10 @@ namespace WeAreProStars.Core.Manage.UI.Template
             content.transform.SetAsFirstSibling();
             content.name = "Content";
             scrollViewScript.content = content.GetComponent<RectTransform>();
-            //onClickItem = null;
-            //onClearSelection = null;
+            
             _items = new();
             _selectingItems = new();
+            this.initialized = true;
         }
 
         /// <summary>
