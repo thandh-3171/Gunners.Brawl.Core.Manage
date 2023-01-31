@@ -5,7 +5,7 @@ using UnityEngine;
 namespace WeAreProStars.Core.Manage.UI.Template
 {
     [Serializable]
-    public abstract class UIItemAbstract : MonoBehaviour
+    public abstract class UIItemAbstract : UIEntityTemplate
     {
         #region events
         public delegate void OnSetSelected();

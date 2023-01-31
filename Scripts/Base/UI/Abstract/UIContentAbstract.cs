@@ -6,7 +6,7 @@ using WeAreProStars.Core.Manage.UI.Template;
 namespace WeAreProStars.Core.Manage
 {
     [Serializable]
-    public abstract class UIContentAbstract : MonoBehaviour
+    public abstract class UIContentAbstract : UIEntityTemplate
     {
         #region events
         // Event right at the moment select an item.

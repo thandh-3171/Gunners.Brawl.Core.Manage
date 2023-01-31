@@ -48,7 +48,7 @@ namespace WeAreProStars.Core.Manage.UI.Template
         }
         #endregion
 
-        #region Private methods
+        #region Private methods        
         IEnumerator<float> _Initialized()
         {
             var time = Time.time;
@@ -80,6 +80,7 @@ namespace WeAreProStars.Core.Manage.UI.Template
         #endregion
 
         #region public methods
+        
         /// <summary>
         /// Add a new item asyncly.
         /// </summary>
