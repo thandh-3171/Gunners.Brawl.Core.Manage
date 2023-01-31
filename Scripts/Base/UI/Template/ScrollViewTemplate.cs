@@ -310,6 +310,12 @@ namespace WeAreProStars.Core.Manage.UI.Template
             //    }
             //}
         }
+
+        [ContextMenu("ActiveFirstItem")]
+        public void ActiveFirstItem()
+        {
+            _items[0].Activate();
+        }
         #endregion
     }
 }
