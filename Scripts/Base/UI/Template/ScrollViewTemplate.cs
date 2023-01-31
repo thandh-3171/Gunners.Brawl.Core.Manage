@@ -44,7 +44,8 @@ namespace WeAreProStars.Core.Manage.UI.Template
         /// </summary>
         public override void Awake()
         {
-            Timing.RunCoroutine(_Initialized());
+            base.Awake();
+            HandleInitialized = Timing.RunCoroutine(_Initialized());
         }
         #endregion
 
@@ -242,7 +243,7 @@ namespace WeAreProStars.Core.Manage.UI.Template
         /// Delete and re-create is way faster than delete one by one.
         /// </summary>
         public override void ResetContent()
-        {            
+        {
             Timing.RunCoroutine(_ResetScroll());
         }
 
@@ -257,7 +258,7 @@ namespace WeAreProStars.Core.Manage.UI.Template
             content.transform.SetAsFirstSibling();
             content.name = "Content";
             scrollViewScript.content = content.GetComponent<RectTransform>();
-            
+
             _items = new();
             _selectingItems = new();
             this.initialized = true;

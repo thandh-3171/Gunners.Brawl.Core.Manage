@@ -1,3 +1,4 @@
+using MEC;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -37,13 +38,20 @@ namespace WeAreProStars.Core.Manage
         [SerializeField] private bool _initialized = false;
         #endregion
 
+        #region private vars        
+        protected CoroutineHandle HandleAddItem;
+        protected CoroutineHandle HandleClickItem;
+        protected CoroutineHandle HandleClearSelection;
+        protected CoroutineHandle HandleResetContent;
+        #endregion
+
         #region private methods
         /// <summary>
         /// Handle how to set initialized state.
         /// Value be check first, set after.
         /// </summary>
         /// <param name="value"></param>
-        public virtual void HandleSetInitialized(bool value)
+        public void HandleSetInitialized(bool value)
         {
             //If same value, do nothing.
             if (_initialized == value) return;
@@ -57,7 +65,14 @@ namespace WeAreProStars.Core.Manage
         /// <summary>
         /// Frequently, I set up prefabs for scroll rect, view port and content gameobject here.
         /// </summary>
-        public abstract void Awake();
+        public override void Awake()
+        {
+            /// Register async functions.
+            this.asyncFuncs.Add(HandleAddItem);
+            this.asyncFuncs.Add(HandleClickItem);
+            this.asyncFuncs.Add(HandleClearSelection);
+            this.asyncFuncs.Add(HandleResetContent);
+        }
 
         /// <summary>
         /// To add an item.        

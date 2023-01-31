@@ -13,8 +13,12 @@ namespace WeAreProStars.Core.Manage.UI.Template
         /// </summary>
         public List<CoroutineHandle> asyncFuncs = new();
         #endregion
-        
+
         #region abstract methods
+        /// <summary>
+        /// 1. Register all async functions here.
+        /// </summary>
+        public abstract void Awake();
         /// <summary>
         /// Return if lived.
         /// </summary>        
