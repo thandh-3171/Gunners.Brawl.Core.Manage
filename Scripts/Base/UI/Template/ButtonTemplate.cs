@@ -42,11 +42,7 @@ namespace WeAreProStars.Core.Manage.UI.Template
         // }
         #endregion
 
-        #region methods
-        public override bool Lived()
-        {
-            return (this.enabled && this.gameObject.activeSelf);
-        }
+        #region methods        
         //public override IEnumerator<float> Initialized()
         //{
         //    var time = Time.time;

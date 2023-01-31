@@ -80,13 +80,33 @@ namespace WeAreProStars.Core.Manage.UI.Template
         #endregion
 
         #region public methods
-        
+
         /// <summary>
         /// Add a new item asyncly.
         /// </summary>
-        public override void AddQueueItem<T>(T data, int index = -1, bool autoActive = true)
+        public override void AddQueueItem<T>(T data, int index = -1, bool autoActive = true, bool forceLived = false)
         {
-            //if (!en)
+            if (!Lived())
+            {
+                if (!forceLived)
+                {
+                    Debug.Log("Not enabled. Can't run.");
+                    return;
+                }
+                else { }
+                //TODO : Code to force game object become active here.
+            }
+            Timing.RunCoroutine(_AddQueueItem<T>(data, index, autoActive));
+        }
+
+        IEnumerator<float> _AddQueueItem<T>(T data, int index = -1, bool autoActive = true)
+        {
+            GameObject newItem = _InstantiateItem();
+            UIItemAbstract iItem = newItem.GetComponent<UIItemAbstract>();
+            yield return Timing.WaitUntilTrue(() => iItem.Lived());
+            _InitializeQueueItem<T>(data, newItem);
+            _items.Add(iItem);
+            if (autoActive && _items.Count == 1) iItem.ActivateQueue();
         }
 
         /// <summary>
@@ -96,6 +116,16 @@ namespace WeAreProStars.Core.Manage.UI.Template
         /// If autoActive == true, set Index value at 01.
         /// </summary>
         public override GameObject AddReturnItem<T>(T data, int index = -1, bool autoActive = true)
+        {
+            GameObject newItem = _InstantiateItem();
+            UIItemAbstract iItem = newItem.GetComponent<UIItemAbstract>();
+            _InitializeQueueItem<T>(data, newItem);
+            _items.Add(iItem);
+            if (autoActive && _items.Count == 1) iItem.ActivateQueue();
+            return newItem;
+        }
+
+        private GameObject _InstantiateItem()
         {
             if (itemPrefab == null)
             {
@@ -108,19 +138,20 @@ namespace WeAreProStars.Core.Manage.UI.Template
                 return null;
             }
             GameObject newItem = Instantiate(itemPrefab, content.transform);
+            return newItem;
+        }
+
+        /// <summary>
+        /// Call item's own asynchronous functions.
+        /// </summary>        
+        private void _InitializeQueueItem<T>(T data, GameObject newItem)
+        {
             UIItemAbstract iItem = newItem.GetComponent<UIItemAbstract>();
-            _items.Add(iItem);
             if (iItem != null)
             {
                 iItem.Initialized();
                 iItem.OnPostQueueAdded_SetupUI(data, newItem);
-                if (autoActive && _items.Count == 1)
-                {
-                    iItem.ActivateQueue();
-                    Debug.Log("First Activate.");
-                }
             }
-            return newItem;
         }
 
         //private IEnumerator<float> _InitializingNewItem<T>(GameObject newItem, T data, int index = -1, bool autoActive = true)

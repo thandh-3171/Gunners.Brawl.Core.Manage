@@ -62,7 +62,7 @@ namespace WeAreProStars.Core.Manage
         /// <summary>
         /// To add an item.        
         /// </summary>
-        public abstract void AddQueueItem<T>(T data, int index = -1, bool autoActive = true);
+        public abstract void AddQueueItem<T>(T data, int index = -1, bool autoActive = true, bool forceLived = false);
 
         /// <summary>
         /// To add an item.
