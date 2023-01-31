@@ -67,6 +67,8 @@ namespace WeAreProStars.Core.Manage
         /// </summary>
         public override void Awake()
         {
+            base.Awake();
+
             /// Register async functions.
             this.asyncFuncs.Add(HandleAddItem);
             this.asyncFuncs.Add(HandleClickItem);
