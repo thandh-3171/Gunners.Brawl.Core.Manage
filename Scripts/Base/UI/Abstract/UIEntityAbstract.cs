@@ -12,6 +12,11 @@ namespace WeAreProStars.Core.Manage.UI.Template
         /// Contain async funcs.
         /// </summary>
         public List<CoroutineHandle> asyncFuncs = new();
+
+        /// <summary>
+        /// Store any data.
+        /// </summary>
+        protected List<object> library = new();
         #endregion
 
         #region abstract methods

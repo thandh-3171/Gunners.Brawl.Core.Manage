@@ -39,6 +39,9 @@ namespace WeAreProStars.Core.Manage
         #endregion
 
         #region private vars        
+        /// <summary>
+        /// Processor.
+        /// </summary>
         protected CoroutineHandle HandleAddItem;
         protected CoroutineHandle HandleClickItem;
         protected CoroutineHandle HandleClearSelection;
