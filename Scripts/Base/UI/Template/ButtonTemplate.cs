@@ -6,7 +6,7 @@ using MEC;
 
 namespace WeAreProStars.Core.Manage.UI.Template
 {
-    public class ButtonTemplate : UIItemAbstract
+    public class ButtonTemplate : UIItemTemplate
     {
         #region public vars        
         #endregion
@@ -78,28 +78,6 @@ namespace WeAreProStars.Core.Manage.UI.Template
         }
 
         /// <summary>
-        /// Call to wait init and execute activate.
-        /// </summary>        
-        public override void ActivateQueue()
-        {
-            if (!this.enabled || !gameObject.activeSelf)
-            {
-                Debug.Log("Not enabled. Can't run.");
-                return;
-            }
-            Timing.RunCoroutine(_ActivateQueue());
-        }
-
-        /// <summary>
-        /// Call to wait init and execute activate.
-        /// </summary>        
-        public override IEnumerator<float> _ActivateQueue()
-        {
-            yield return Timing.WaitUntilTrue(() => this.initialized);
-            Activate();
-        }
-
-        /// <summary>
         /// Call to perform task of clicking.
         /// </summary>
         //public override IEnumerator<float> OnClick()
@@ -107,6 +85,7 @@ namespace WeAreProStars.Core.Manage.UI.Template
         //    yield return Timing.WaitUntilTrue(() => this.initialized);
         //    if (!selected) StartCoroutine(Activate());
         //}
+
         public override void OnClick()
         {
             if (!initialized) return;
@@ -123,33 +102,6 @@ namespace WeAreProStars.Core.Manage.UI.Template
         {
             if (!initialized) return;
             this.button.onClick.AddListener(() => OnClick());
-        }
-
-        /// <summary>
-        /// Call to wait init and execute onpostadd set-up.
-        /// </summary>        
-        public override void OnPostQueueAdded_SetupUI<T>(T data, GameObject entity)
-        {
-            if (!this.enabled || !gameObject.activeSelf)
-            {
-                Debug.Log("Not enabled. Can't run.");
-                return;
-            }
-            Timing.RunCoroutine(_OnPostQueueAdded_SetupUI<T>(data, entity));
-        }
-
-        /// <summary>
-        /// Call to wait init and execute onpostadd set-up.
-        /// </summary>        
-        public override IEnumerator<float> _OnPostQueueAdded_SetupUI<T>(T data, GameObject entity)
-        {
-            if (!this.enabled || !gameObject.activeSelf)
-            {
-                Debug.Log("Not enabled. Can't run.");
-                yield break;
-            }
-            yield return Timing.WaitUntilTrue(() => this.initialized);
-            OnPostAdded_SetupUI<T>(data, entity);
         }
         #endregion
     }
