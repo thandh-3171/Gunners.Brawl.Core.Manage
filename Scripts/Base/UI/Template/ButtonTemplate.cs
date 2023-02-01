@@ -6,7 +6,7 @@ using MEC;
 
 namespace WeAreProStars.Core.Manage.UI.Template
 {
-    public class ButtonTemplate : UIItemTemplate
+    public class ButtonTemplate : UIItemAbstract
     {
         #region public vars        
         #endregion
