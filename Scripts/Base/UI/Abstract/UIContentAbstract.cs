@@ -110,7 +110,6 @@ namespace WeAreProStars.Core.Manage
         /// <summary>
         /// To reset the content.
         /// </summary>
-        [ContextMenu("ResetScroll")]
         public abstract void ResetContent();
         #endregion
     }

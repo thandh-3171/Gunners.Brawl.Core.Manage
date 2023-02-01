@@ -18,7 +18,7 @@ namespace WeAreProStars.Core.Manage.UI.Template
         /// <summary>
         /// 1. No async function to register here.
         /// </summary>
-        public override void Awake() 
+        public override void Awake()
         {
             // Register async functions.
             this.asyncFuncs.Add(HandleInitialized);
@@ -39,7 +39,7 @@ namespace WeAreProStars.Core.Manage.UI.Template
         /// </summary>        
         public override bool IsBusy()
         {
-            return asyncFuncs.Find(func => func != null && func.IsRunning) != null;
+            return asyncFuncs.Exists(func => func != null && func.IsRunning);            
         }
 
         #endregion

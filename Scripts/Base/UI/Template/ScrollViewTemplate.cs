@@ -20,6 +20,7 @@ namespace WeAreProStars.Core.Manage.UI.Template
     {
         #region Serialized
         [SerializeField] GameObject itemPrefab;
+        //[SerializeField] bool busy;
         public bool Multiple = false;
         #endregion
 
@@ -47,6 +48,11 @@ namespace WeAreProStars.Core.Manage.UI.Template
             base.Awake();
             HandleInitialized = Timing.RunCoroutine(_Initialized());
         }
+
+        //private void Update()
+        //{
+        //    busy = IsBusy();
+        //}
         #endregion
 
         #region Private methods        
@@ -242,6 +248,7 @@ namespace WeAreProStars.Core.Manage.UI.Template
         /// <summary>
         /// Delete and re-create is way faster than delete one by one.
         /// </summary>
+        [ContextMenu("ResetScroll")]        
         public override void ResetContent()
         {
             HandleResetContent = Timing.RunCoroutine(_ResetScroll());
