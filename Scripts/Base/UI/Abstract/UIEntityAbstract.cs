@@ -2,10 +2,11 @@ using MEC;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace WeAreProStars.Core.Manage.UI.Template
 {
-    public abstract class UIEntityAbstract : MonoBehaviour
+    public abstract class UIEntityAbstract : UIBehaviour
     {
         #region public vars
         /// <summary>
@@ -19,11 +20,7 @@ namespace WeAreProStars.Core.Manage.UI.Template
         protected List<object> library = new();
         #endregion
 
-        #region abstract methods
-        /// <summary>
-        /// 1. Register all async functions here.
-        /// </summary>
-        public abstract void Awake();
+        #region abstract methods        
         /// <summary>
         /// Return if lived.
         /// </summary>        

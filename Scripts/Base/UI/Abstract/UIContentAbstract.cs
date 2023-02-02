@@ -68,7 +68,7 @@ namespace WeAreProStars.Core.Manage
         /// <summary>
         /// Frequently, I set up prefabs for scroll rect, view port and content gameobject here.
         /// </summary>
-        public override void Awake()
+        protected override void Awake()
         {
             base.Awake();
 
