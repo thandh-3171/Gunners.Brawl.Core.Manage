@@ -33,11 +33,6 @@ namespace WeAreProStars.Core.Manage.UI.Template
         #endregion
 
         #region Mono
-        protected override void OnEnable()
-        {
-            Debug.Log("abc");
-        }
-
         protected override void Awake()
         {
             base.Awake();
@@ -65,27 +60,12 @@ namespace WeAreProStars.Core.Manage.UI.Template
                 return;
             }
             var stored = new DropdownProData(_dropdown);
-            //try
-            //{
-            //    PrefabUtility.UnpackPrefabInstance(gameObject, PrefabUnpackMode.OutermostRoot, InteractionMode.AutomatedAction);
-            //}
-            //catch { }
             EditorApplication.delayCall += () =>
             {
                 DestroyImmediate(_dropdown);
                 Dropdown tempDropdown = gameObject.AddComponent<DropdownPro>();
                 stored.ApplyTo(tempDropdown);
             };
-            //try
-            //{
-            //    if (PrefabUtility.IsPartOfAnyPrefab(this)) return;
-            //    GameObject newRoot = PrefabUtility.SaveAsPrefabAssetAndConnect(gameObject,
-            //        AssetDatabase.GetAssetPath(gameObject),
-            //        InteractionMode.UserAction, out bool success);
-            //}
-            //catch { }
-
-
         }
 
         /// <summary>
@@ -125,11 +105,12 @@ namespace WeAreProStars.Core.Manage.UI.Template
             //this.dropDown.
 
             GameObject newItem = _InstantiateItem();
-            UIItemAbstract iItem = newItem.GetComponent<UIItemAbstract>();
-            yield return Timing.WaitUntilTrue(() => iItem.Lived());
-            _InitializeQueueItem<T>(data, newItem);
-            _items.Add(iItem);
-            if (autoActive && _items.Count == 1) iItem.ActivateQueue();
+            //UIItemAbstract iItem = newItem.GetComponent<UIItemAbstract>();
+            //yield return Timing.WaitUntilTrue(() => iItem.Lived());
+            //_InitializeQueueItem<T>(data, newItem);
+            //_items.Add(iItem);
+            //if (autoActive && _items.Count == 1) iItem.ActivateQueue();
+            yield break;
         }
 
         private GameObject _InstantiateItem()
