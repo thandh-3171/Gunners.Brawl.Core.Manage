@@ -20,6 +20,11 @@ namespace WeAreProStars.Core.Manage
             }
             else return AssetDatabase.LoadAssetAtPath(AssetDatabase.GUIDToAssetPath(assets[0]), typeof(GameObject)) as GameObject;
         }
+
+        public static GameObject FindAssetExact(this GameObject gameObject, string filter = "")
+        {
+            return FindAssetExact(gameObject.name, filter);
+        }
 #endif
         #endregion
     }

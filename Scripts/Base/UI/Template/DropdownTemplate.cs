@@ -1,12 +1,11 @@
 using MEC;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.UIElements;
-using static UnityEngine.UI.Dropdown;
 
 namespace WeAreProStars.Core.Manage.UI.Template
 {
@@ -30,31 +29,73 @@ namespace WeAreProStars.Core.Manage.UI.Template
         #endregion
 
         #region Private vars.
-        private Dropdown dropDown;
-        private ScrollView scrollView;
+        Dropdown dropdown;
         #endregion
 
         #region Mono
-        public override void Awake()
+        protected override void OnEnable()
+        {
+            Debug.Log("abc");
+        }
+
+        protected override void Awake()
         {
             base.Awake();
             HandleInitialized = Timing.RunCoroutine(_Initialized());
         }
+
+        protected override void OnValidate()
+        {
+            base.OnValidate();
+            if (GetComponent<DropdownPro>() == null) GenerateDropdownPro();
+        }
         #endregion
 
-        #region Private methods        
+        #region Private methods
+        /// <summary>
+        /// I want to replace dropdown by dropdown-pro.
+        /// </summary>
+        [ContextMenu("GenerateDropdownPro")]
+        private void GenerateDropdownPro()
+        {
+            //Dropdown dropdown = GetComponent<Dropdown>();
+            //if (dropdown == null)
+            //{
+            //    Debug.LogError("Valid error. Null dropdown.");
+            //    return;
+            //}
+            //var stored = new DropdownProData(dropdown);
+            //try
+            //{
+            //    PrefabUtility.UnpackPrefabInstance(gameObject, PrefabUnpackMode.OutermostRoot, InteractionMode.AutomatedAction);
+            //}
+            //catch { }
+
+            
+
+
+            //try
+            //{
+            //    if (PrefabUtility.IsPartOfAnyPrefab(this)) return;
+            //    GameObject newRoot = PrefabUtility.SaveAsPrefabAssetAndConnect(gameObject,
+            //        AssetDatabase.GetAssetPath(gameObject),
+            //        InteractionMode.UserAction, out bool success);
+            //}
+            //catch { }
+
+
+        }
+
+        /// <summary>
+        /// Initializing process.
+        /// </summary>
+        /// <returns></returns>
         IEnumerator<float> _Initialized()
         {
-            this.dropDown = GetComponent<Dropdown>();
-            if (dropDown == null)
+            this.dropdown = GetComponent<DropdownPro>();
+            if (dropdown == null)
             {
-                Debug.LogWarning("Init error.Null dropdown.");
-                yield break;
-            }
-            this.scrollView = GetComponentInChildren<ScrollView>();
-            if (scrollView == null)
-            {
-                Debug.LogWarning("Init error. Null scroll view.");
+                Debug.LogWarning("Init error.Null dropdown-pro.");
                 yield break;
             }
             initialized = true;
@@ -77,10 +118,9 @@ namespace WeAreProStars.Core.Manage.UI.Template
 
         IEnumerator<float> _AddQueueItem<T>(T data, int index = -1, bool autoActive = true)
         {
-            OptionData newOptionData = new();
-            this.dropDown.AddOptions(new List<OptionData>() { newOptionData });
-            this.dropDown.
-
+            Dropdown.OptionData newOptionData = new();
+            this.dropdown.AddOptions(new List<Dropdown.OptionData>() { newOptionData });
+            //this.dropDown.
 
             GameObject newItem = _InstantiateItem();
             UIItemAbstract iItem = newItem.GetComponent<UIItemAbstract>();
@@ -92,18 +132,18 @@ namespace WeAreProStars.Core.Manage.UI.Template
 
         private GameObject _InstantiateItem()
         {
-            if (itemPrefab == null)
-            {
-                Debug.Log("Item prefab null.");
-                return null;
-            }
-            if (content == null)
-            {
-                Debug.Log("Content null.");
-                return null;
-            }
-            GameObject newItem = Instantiate(itemPrefab, content.transform);
-            return newItem;
+            //if (itemPrefab == null)
+            //{
+            //    Debug.Log("Item prefab null.");
+            //    return null;
+            //}
+            //if (content == null)
+            //{
+            //    Debug.Log("Content null.");
+            //    return null;
+            //}
+            //GameObject newItem = Instantiate(itemPrefab, content.transform);
+            return null;
         }
 
         /// <summary>

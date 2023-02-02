@@ -43,7 +43,7 @@ namespace WeAreProStars.Core.Manage.UI.Template
         /// <summary>
         /// Must be called first line. And must should be overrided.
         /// </summary>
-        public override void Awake()
+        protected override void Awake()
         {
             base.Awake();
             HandleInitialized = Timing.RunCoroutine(_Initialized());

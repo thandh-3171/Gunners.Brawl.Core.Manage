@@ -18,8 +18,9 @@ namespace WeAreProStars.Core.Manage.UI.Template
         /// <summary>
         /// 1. No async function to register here.
         /// </summary>
-        public override void Awake()
+        protected override void Awake()
         {
+            base.Awake();
             // Register async functions.
             this.asyncFuncs.Add(HandleInitialized);
         }
