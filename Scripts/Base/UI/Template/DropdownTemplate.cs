@@ -58,22 +58,24 @@ namespace WeAreProStars.Core.Manage.UI.Template
         [ContextMenu("GenerateDropdownPro")]
         private void GenerateDropdownPro()
         {
-            //Dropdown dropdown = GetComponent<Dropdown>();
-            //if (dropdown == null)
-            //{
-            //    Debug.LogError("Valid error. Null dropdown.");
-            //    return;
-            //}
-            //var stored = new DropdownProData(dropdown);
+            Dropdown _dropdown = GetComponent<Dropdown>();
+            if (_dropdown == null)
+            {
+                Debug.LogError("Valid error. Null dropdown.");
+                return;
+            }
+            var stored = new DropdownProData(_dropdown);
             //try
             //{
             //    PrefabUtility.UnpackPrefabInstance(gameObject, PrefabUnpackMode.OutermostRoot, InteractionMode.AutomatedAction);
             //}
             //catch { }
-
-            
-
-
+            EditorApplication.delayCall += () =>
+            {
+                DestroyImmediate(_dropdown);
+                Dropdown tempDropdown = gameObject.AddComponent<DropdownPro>();
+                stored.ApplyTo(tempDropdown);
+            };
             //try
             //{
             //    if (PrefabUtility.IsPartOfAnyPrefab(this)) return;
